@@ -11,6 +11,7 @@ local CoreGui = game:GetService("CoreGui")
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
 local Camera = workspace.CurrentCamera
 
 local player = Players.LocalPlayer
@@ -156,7 +157,7 @@ minBtnCorner.CornerRadius = UDim.new(0, 6)
 minBtnCorner.Parent = minimizeBtn
 
 ---------------------------------------------------------
--- TAB NAVIGATION BAR (6 TABS)
+-- TAB NAVIGATION BAR
 ---------------------------------------------------------
 local tabNavFrame = Instance.new("Frame")
 tabNavFrame.Name = "TabNavFrame"
@@ -171,15 +172,15 @@ local tabNavCorner = Instance.new("UICorner")
 tabNavCorner.CornerRadius = UDim.new(0, 6)
 tabNavCorner.Parent = tabNavFrame
 
-local function createTabBtn(name, text, posScale)
+local function createTabBtn(name, text, posScale, sizeWidth)
 	local btn = Instance.new("TextButton")
 	btn.Name = name
-	btn.Size = UDim2.new(0.162, 0, 1, 0)
+	btn.Size = UDim2.new(sizeWidth or 0.16, 0, 1, 0)
 	btn.Position = UDim2.new(posScale, 0, 0, 0)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 24, 40)
 	btn.TextColor3 = Color3.fromRGB(200, 200, 215)
 	btn.Text = text
-	btn.TextSize = 9
+	btn.TextSize = 9.5
 	btn.Font = Enum.Font.GothamBold
 	btn.Parent = tabNavFrame
 	
@@ -189,12 +190,12 @@ local function createTabBtn(name, text, posScale)
 	return btn
 end
 
-local tab1Btn = createTabBtn("Tab1Btn", "Speed", 0)
-local tab2Btn = createTabBtn("Tab2Btn", "Crosshair", 0.168)
-local tab3Btn = createTabBtn("Tab3Btn", "Anti-Aim", 0.336)
-local tab4Btn = createTabBtn("Tab4Btn", "Visuals", 0.504)
-local tab5Btn = createTabBtn("Tab5Btn", "Server", 0.672)
-local tab6Btn = createTabBtn("Tab6Btn", "Misc", 0.840)
+local tab1Btn = createTabBtn("Tab1Btn", "Speed", 0.00, 0.162)
+local tab2Btn = createTabBtn("Tab2Btn", "Cross", 0.167, 0.162)
+local tab3Btn = createTabBtn("Tab3Btn", "Anti-Aim", 0.334, 0.162)
+local tab4Btn = createTabBtn("Tab4Btn", "Visuals", 0.501, 0.162)
+local tab5Btn = createTabBtn("Tab5Btn", "Server", 0.668, 0.162)
+local tab6Btn = createTabBtn("Tab6Btn", "Misc", 0.835, 0.162)
 
 tab1Btn.BackgroundColor3 = activeTabBg
 tab1Btn.TextColor3 = activeTabTxt
@@ -412,10 +413,12 @@ local cmCorner = Instance.new("UICorner")
 cmCorner.CornerRadius = UDim.new(0, 6)
 cmCorner.Parent = cameraModeBtn
 
--- TAB 4 (VISUALS) - NEU SORTIERT
+---------------------------------------------------------
+-- TAB 4 (VISUALS) - REIHENFOLGE ANGEPASST
+---------------------------------------------------------
 local nameTagsBtn = Instance.new("TextButton")
 nameTagsBtn.Name = "NameTagsBtn"
-nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 26)
+nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 24)
 nameTagsBtn.Position = UDim2.new(0.03, 0, 0, 5)
 nameTagsBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 nameTagsBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
@@ -427,12 +430,28 @@ local ntCorner = Instance.new("UICorner")
 ntCorner.CornerRadius = UDim.new(0, 6)
 ntCorner.Parent = nameTagsBtn
 
-local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 38)
+local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 34)
 
+-- NIGHT MODE KNOPF ("K" ENTFERNT)
+local nightModeBtn = Instance.new("TextButton")
+nightModeBtn.Name = "NightModeBtn"
+nightModeBtn.Size = UDim2.new(0.94, 0, 0, 24)
+nightModeBtn.Position = UDim2.new(0.03, 0, 0, 74)
+nightModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
+nightModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
+nightModeBtn.Text = "Night Mode: OFF"
+nightModeBtn.TextSize = 11
+nightModeBtn.Font = Enum.Font.GothamBold
+nightModeBtn.Parent = tab4Page
+local nmCorner = Instance.new("UICorner")
+nmCorner.CornerRadius = UDim.new(0, 6)
+nmCorner.Parent = nightModeBtn
+
+-- WEAPON CAMO (DARUNTER)
 local weaponCamoBtn = Instance.new("TextButton")
 weaponCamoBtn.Name = "WeaponCamoBtn"
-weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 26)
-weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 78)
+weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 24)
+weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 102)
 weaponCamoBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 weaponCamoBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 weaponCamoBtn.Text = "Weapon Camo: OFF"
@@ -443,13 +462,14 @@ local wcCorner = Instance.new("UICorner")
 wcCorner.CornerRadius = UDim.new(0, 6)
 wcCorner.Parent = weaponCamoBtn
 
+-- INVISIBLE WEAPON (DARUNTER)
 local invisibleWeaponBtn = Instance.new("TextButton")
 invisibleWeaponBtn.Name = "InvisibleWeaponBtn"
-invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 26)
-invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 110)
+invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 24)
+invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 130)
 invisibleWeaponBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 invisibleWeaponBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
-invisibleWeaponBtn.Text = "Invisible Weapon (First Person): OFF"
+invisibleWeaponBtn.Text = "Invisible Weapon: OFF"
 invisibleWeaponBtn.TextSize = 11
 invisibleWeaponBtn.Font = Enum.Font.GothamBold
 invisibleWeaponBtn.Parent = tab4Page
@@ -459,8 +479,8 @@ iwCorner.Parent = invisibleWeaponBtn
 
 local camoPaletteToggleBtn = Instance.new("TextButton")
 camoPaletteToggleBtn.Name = "CamoPaletteToggleBtn"
-camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 26)
-camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 142)
+camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 24)
+camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 158)
 camoPaletteToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 camoPaletteToggleBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 camoPaletteToggleBtn.Text = "Camo Palette: CLOSED"
@@ -474,7 +494,7 @@ cptCorner.Parent = camoPaletteToggleBtn
 local paletteFrame = Instance.new("Frame")
 paletteFrame.Name = "PaletteFrame"
 paletteFrame.Size = UDim2.new(0.94, 0, 0, 0)
-paletteFrame.Position = UDim2.new(0.03, 0, 0, 173)
+paletteFrame.Position = UDim2.new(0.03, 0, 0, 185)
 paletteFrame.BackgroundTransparency = 1
 paletteFrame.ClipsDescendants = true
 paletteFrame.Parent = tab4Page
@@ -546,7 +566,7 @@ end
 local paletteOpen = false
 camoPaletteToggleBtn.MouseButton1Click:Connect(function()
 	paletteOpen = not paletteOpen
-	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 55) or UDim2.new(0.94, 0, 0, 0)
+	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 42) or UDim2.new(0.94, 0, 0, 0)
 	camoPaletteToggleBtn.Text = paletteOpen and "Camo Palette: OPEN" or "Camo Palette: CLOSED"
 	camoPaletteToggleBtn.BackgroundColor3 = paletteOpen and (buttonRainbowMode and Color3.fromHSV(hue, 1, 1) or activeTabBg) or Color3.fromRGB(40, 32, 52)
 	camoPaletteToggleBtn.TextColor3 = paletteOpen and activeTabTxt or Color3.fromRGB(220, 220, 230)
@@ -610,7 +630,6 @@ miscTitle.Font = Enum.Font.GothamBold
 miscTitle.TextXAlignment = Enum.TextXAlignment.Left
 miscTitle.Parent = tab6Page
 
--- Helper function to create color option buttons for UI elements
 local function createUIColorPicker(parent, yPos, labelText, callback)
 	local lbl = Instance.new("TextLabel")
 	lbl.Size = UDim2.new(1, -20, 0, 16)
@@ -672,7 +691,7 @@ local function createUIColorPicker(parent, yPos, labelText, callback)
 	end
 end
 
--- Forward declarations for switcher
+-- Forward declaration for switcher
 local switchTab
 
 -- Border Color Picker
@@ -682,7 +701,6 @@ createUIColorPicker(tab6Page, 30, "Menu Border (UIStroke) Color:", function(col)
 	else
 		borderRainbowMode = false
 		uiStroke.Color = col
-		miniStroke.Color = col
 	end
 end)
 
@@ -697,7 +715,9 @@ createUIColorPicker(tab6Page, 85, "Active Button Accent Color:", function(col)
 	end
 end)
 
+---------------------------------------------------------
 -- FOOTER
+---------------------------------------------------------
 local saveConfigBtn = Instance.new("TextButton")
 saveConfigBtn.Name = "SaveConfigBtn"
 saveConfigBtn.Size = UDim2.new(0.45, 0, 0, 22)
@@ -746,7 +766,7 @@ miniIcon.Size = UDim2.new(0, 44, 0, 44)
 miniIcon.Position = UDim2.new(0.5, -22, 0, 10)
 miniIcon.BackgroundColor3 = Color3.fromRGB(20, 16, 26)
 miniIcon.Image = "rbxassetid://93598324414519"
-miniIcon.Visible = false
+miniIcon.Visible = true
 miniIcon.Active = true
 miniIcon.Parent = screenGui
 
@@ -816,6 +836,7 @@ local thirdPersonActive = false
 local weaponCamoActive = false
 local nameTagsActive = false
 local invisibleWeaponActive = false
+local nightModeActive = false
 local crosshairStyle = "Standard"
 
 local speedOffsetState = -1
@@ -823,6 +844,56 @@ local customPosX, customPosY = 0.5, 0.5
 local configFileName = "SpeedCrosshairConfig.json"
 
 local slidingSpeed, slidingJump, slidingSpin, slidingRot, slidingThick, slidingSize, slidingEspDist = false, false, false, false, false, false, false
+local draggingCrosshair = false
+
+-- Custom Sky Objects for Night Mode
+local customSky = nil
+local customAtmosphere = nil
+
+local function applyNightMode()
+	if nightModeActive then
+		Lighting.ClockTime = 0
+		Lighting.Brightness = 2.65
+		Lighting.Ambient = Color3.fromRGB(80, 70, 105)
+		Lighting.OutdoorAmbient = Color3.fromRGB(100, 90, 130)
+		
+		if not Lighting:FindFirstChild("CustomNightSky") then
+			customSky = Instance.new("Sky")
+			customSky.Name = "CustomNightSky"
+			customSky.SkyboxBk = "rbxassetid://135280496"
+			customSky.SkyboxDn = "rbxassetid://135280496"
+			customSky.SkyboxFt = "rbxassetid://135280496"
+			customSky.SkyboxLf = "rbxassetid://135280496"
+			customSky.SkyboxRt = "rbxassetid://135280496"
+			customSky.SkyboxUp = "rbxassetid://135280496"
+			customSky.CelestialBodiesShown = true
+			customSky.MoonTextureId = "rbxassetid://644432057"
+			customSky.Parent = Lighting
+		end
+
+		if not Lighting:FindFirstChild("CustomNightAtmosphere") then
+			customAtmosphere = Instance.new("Atmosphere")
+			customAtmosphere.Name = "CustomNightAtmosphere"
+			customAtmosphere.Density = 0.12
+			customAtmosphere.Offset = 0.25
+			customAtmosphere.Color = Color3.fromRGB(60, 50, 80)
+			customAtmosphere.Decay = Color3.fromRGB(35, 25, 50)
+			customAtmosphere.Glare = 0.4
+			customAtmosphere.Haze = 0.4
+			customAtmosphere.Parent = Lighting
+		end
+	else
+		Lighting.ClockTime = 14
+		Lighting.Brightness = 2
+		Lighting.Ambient = Color3.fromRGB(128, 128, 128)
+		Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+		
+		local s = Lighting:FindFirstChild("CustomNightSky")
+		if s then s:Destroy() end
+		local a = Lighting:FindFirstChild("CustomNightAtmosphere")
+		if a then a:Destroy() end
+	end
+end
 
 local function getHumanoid()
 	local char = player.Character
@@ -859,6 +930,8 @@ local function applyStats()
 		player.CameraMaxZoomDistance = 0.5
 		player.CameraMode = Enum.CameraMode.LockFirstPerson
 	end
+	
+	applyNightMode()
 end
 
 local function updateGUIFromValues()
@@ -897,9 +970,10 @@ local function updateGUIFromValues()
 	espDistLabel.Text = "ESP Distance: " .. tostring(currentEspDist) .. " Studs"
 
 	if not freeCrosshairActive then
-		customPosX, customPosY = 0.5, 0.5
+		crosshairFrame.Position = UDim2.new(customPosX, 0, customPosY, 0)
+	else
+		crosshairFrame.Position = UDim2.new(customPosX, 0, customPosY, 0)
 	end
-	crosshairFrame.Position = UDim2.new(customPosX, 0, customPosY, 0)
 
 	crosshairFrame.Visible = crosshairActive
 	toggleCrosshairBtn.Text = crosshairActive and "Crosshair: ON" or "Crosshair: OFF"
@@ -948,9 +1022,13 @@ local function updateGUIFromValues()
 	nameTagsBtn.BackgroundColor3 = nameTagsActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	nameTagsBtn.TextColor3 = nameTagsActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
-	invisibleWeaponBtn.Text = invisibleWeaponActive and "Invisible Weapon (First Person): ON" or "Invisible Weapon (First Person): OFF"
+	invisibleWeaponBtn.Text = invisibleWeaponActive and "Invisible Weapon: ON" or "Invisible Weapon: OFF"
 	invisibleWeaponBtn.BackgroundColor3 = invisibleWeaponActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	invisibleWeaponBtn.TextColor3 = invisibleWeaponActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
+
+	nightModeBtn.Text = nightModeActive and "Night Mode: ON" or "Night Mode: OFF"
+	nightModeBtn.BackgroundColor3 = nightModeActive and curActiveColor or Color3.fromRGB(40, 32, 52)
+	nightModeBtn.TextColor3 = nightModeActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
 	applyStats()
 end
@@ -965,15 +1043,22 @@ local function saveConfig()
 		CrossSize = currentSizeValue,
 		EspDistance = currentEspDist,
 		CrosshairOn = crosshairActive,
+		FreeCrosshairOn = freeCrosshairActive,
 		AntiAimOn = antiAimActive,
 		ThirdPersonOn = thirdPersonActive,
 		WeaponCamoOn = weaponCamoActive,
 		NameTagsOn = nameTagsActive,
 		InvisibleWeaponOn = invisibleWeaponActive,
+		NightModeOn = nightModeActive,
 		CamoIndex = selectedColorIndex,
 		CrossStyle = crosshairStyle,
 		PosX = customPosX,
-		PosY = customPosY
+		PosY = customPosY,
+		BorderRainbow = borderRainbowMode,
+		ButtonRainbow = buttonRainbowMode,
+		ActiveBgR = activeTabBg.R,
+		ActiveBgG = activeTabBg.G,
+		ActiveBgB = activeTabBg.B
 	}
 	if writefile then
 		pcall(function()
@@ -997,17 +1082,34 @@ local function loadConfig()
 			currentThickness = result.Thickness or 2
 			currentSizeValue = result.CrossSize or 40
 			currentEspDist = result.EspDistance or 1000
-			crosshairActive = result.CrosshairOn
-			if crosshairActive == nil then crosshairActive = true end
+			
+			if result.CrosshairOn ~= nil then crosshairActive = result.CrosshairOn end
+			if result.FreeCrosshairOn ~= nil then 
+				freeCrosshairActive = result.FreeCrosshairOn
+				crosshairOutline.Enabled = freeCrosshairActive
+				freeCrosshairBtn.Text = freeCrosshairActive and "Free Crosshair: ON" or "Free Crosshair: OFF"
+			end
+			
 			antiAimActive = result.AntiAimOn or false
 			thirdPersonActive = result.ThirdPersonOn or false
 			weaponCamoActive = result.WeaponCamoOn or false
 			nameTagsActive = result.NameTagsOn or false
 			invisibleWeaponActive = result.InvisibleWeaponOn or false
+			nightModeActive = result.NightModeOn or false
 			selectedColorIndex = result.CamoIndex or 1
 			crosshairStyle = result.CrossStyle or "Standard"
-			customPosX = result.PosX or 0.5
-			customPosY = result.PosY or 0.5
+			
+			if result.PosX and result.PosY then
+				customPosX = result.PosX
+				customPosY = result.PosY
+			end
+			
+			if result.BorderRainbow ~= nil then borderRainbowMode = result.BorderRainbow end
+			if result.ButtonRainbow ~= nil then buttonRainbowMode = result.ButtonRainbow end
+			if result.ActiveBgR and result.ActiveBgG and result.ActiveBgB then
+				activeTabBg = Color3.new(result.ActiveBgR, result.ActiveBgG, result.ActiveBgB)
+			end
+
 			updateGUIFromValues()
 			statusLabel.Text = "Config Loaded!"
 			task.delay(1.5, function() statusLabel.Text = "Loop: Auto-Active" end)
@@ -1073,6 +1175,11 @@ end)
 
 invisibleWeaponBtn.MouseButton1Click:Connect(function()
 	invisibleWeaponActive = not invisibleWeaponActive
+	updateGUIFromValues()
+end)
+
+nightModeBtn.MouseButton1Click:Connect(function()
+	nightModeActive = not nightModeActive
 	updateGUIFromValues()
 end)
 
@@ -1179,11 +1286,6 @@ RunService.RenderStepped:Connect(function(deltaTime)
 		vBar.BackgroundColor3 = rainbowColor
 		hBar.BackgroundColor3 = rainbowColor
 		crosshairTextLabel.TextColor3 = rainbowColor
-
-		if not freeCrosshairActive then
-			local vpSize = Camera.ViewportSize
-			crosshairFrame.Position = UDim2.new(0, vpSize.X / 2, 0, vpSize.Y / 2)
-		end
 	end
 
 	title.TextColor3 = rainbowColor
@@ -1247,7 +1349,7 @@ end)
 
 resetPosBtn.MouseButton1Click:Connect(function()
 	customPosX, customPosY = 0.5, 0.5
-	crosshairFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+	crosshairFrame.Position = UDim2.new(customPosX, 0, customPosY, 0)
 	statusLabel.Text = "Position Reset!"
 	task.delay(1.5, function() statusLabel.Text = "Loop: Auto-Active" end)
 end)
