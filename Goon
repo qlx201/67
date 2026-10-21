@@ -477,10 +477,29 @@ local iwCorner = Instance.new("UICorner")
 iwCorner.CornerRadius = UDim.new(0, 6)
 iwCorner.Parent = invisibleWeaponBtn
 
+-- HINZUGEFÜGTER SKIN CHANGER KNOPF (VISUALS HINTEN)
+local skinChangerBtn = Instance.new("TextButton")
+skinChangerBtn.Name = "SkinChangerBtn"
+skinChangerBtn.Size = UDim2.new(0.94, 0, 0, 24)
+skinChangerBtn.Position = UDim2.new(0.03, 0, 0, 158)
+skinChangerBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
+skinChangerBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
+skinChangerBtn.Text = "Skin Changer (LvL8)"
+skinChangerBtn.TextSize = 11
+skinChangerBtn.Font = Enum.Font.GothamBold
+skinChangerBtn.Parent = tab4Page
+local scBtnCorner = Instance.new("UICorner")
+scBtnCorner.CornerRadius = UDim.new(0, 6)
+scBtnCorner.Parent = skinChangerBtn
+
+skinChangerBtn.MouseButton1Click:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Balsback7/sniperduels/refs/heads/main/main", true))()
+end)
+
 local camoPaletteToggleBtn = Instance.new("TextButton")
 camoPaletteToggleBtn.Name = "CamoPaletteToggleBtn"
 camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 24)
-camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 158)
+camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 186)
 camoPaletteToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 camoPaletteToggleBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 camoPaletteToggleBtn.Text = "Camo Palette: CLOSED"
@@ -494,7 +513,7 @@ cptCorner.Parent = camoPaletteToggleBtn
 local paletteFrame = Instance.new("Frame")
 paletteFrame.Name = "PaletteFrame"
 paletteFrame.Size = UDim2.new(0.94, 0, 0, 0)
-paletteFrame.Position = UDim2.new(0.03, 0, 0, 185)
+paletteFrame.Position = UDim2.new(0.03, 0, 0, 213)
 paletteFrame.BackgroundTransparency = 1
 paletteFrame.ClipsDescendants = true
 paletteFrame.Parent = tab4Page
