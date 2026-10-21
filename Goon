@@ -37,7 +37,7 @@ else
 end
 
 ---------------------------------------------------------
--- GLOBALE FARB- & MODUS-VARIABLEN (GANZ OBEN)
+-- GLOBAL COLOR & MODE VARIABLES
 ---------------------------------------------------------
 local borderRainbowMode = false
 local buttonRainbowMode = false
@@ -47,7 +47,7 @@ local currentActiveTab = 1
 local hue = 0
 
 ---------------------------------------------------------
--- RAINBOW CROSSHAIR CONTAINER (PERFEKT ZENTRIERT)
+-- RAINBOW CROSSHAIR CONTAINER
 ---------------------------------------------------------
 local crosshairFrame = Instance.new("Frame")
 crosshairFrame.Name = "RainbowCrosshair"
@@ -190,7 +190,7 @@ local function createTabBtn(name, text, posScale, sizeWidth)
 	return btn
 end
 
-local tab1Btn = createTabBtn("Tab1Btn", "Speed", 0.00, 0.162)
+local tab1Btn = createTabBtn("Tab1Btn", "Movement", 0.00, 0.162)
 local tab2Btn = createTabBtn("Tab2Btn", "Cross", 0.167, 0.162)
 local tab3Btn = createTabBtn("Tab3Btn", "Anti-Aim", 0.334, 0.162)
 local tab4Btn = createTabBtn("Tab4Btn", "Visuals", 0.501, 0.162)
@@ -203,23 +203,38 @@ tab1Btn.TextColor3 = activeTabTxt
 ---------------------------------------------------------
 -- TAB CONTAINERS
 ---------------------------------------------------------
-local function createTabPage(name)
-	local page = Instance.new("Frame")
-	page.Name = name
-	page.Size = UDim2.new(1, 0, 0, 235)
-	page.Position = UDim2.new(0, 0, 0, 70)
-	page.BackgroundTransparency = 1
-	page.Visible = false
-	page.Parent = frame
-	return page
+local function createTabPage(name, isScrollable)
+	if isScrollable then
+		local scroll = Instance.new("ScrollingFrame")
+		scroll.Name = name
+		scroll.Size = UDim2.new(1, 0, 0, 225)
+		scroll.Position = UDim2.new(0, 0, 0, 70)
+		scroll.BackgroundTransparency = 1
+		scroll.BorderSizePixel = 0
+		scroll.ScrollBarThickness = 4
+		scroll.ScrollBarImageColor3 = Color3.fromRGB(120, 90, 150)
+		scroll.CanvasSize = UDim2.new(0, 0, 0, 320)
+		scroll.Visible = false
+		scroll.Parent = frame
+		return scroll
+	else
+		local page = Instance.new("Frame")
+		page.Name = name
+		page.Size = UDim2.new(1, 0, 0, 225)
+		page.Position = UDim2.new(0, 0, 0, 70)
+		page.BackgroundTransparency = 1
+		page.Visible = false
+		page.Parent = frame
+		return page
+	end
 end
 
-local tab1Page = createTabPage("Tab1Page")
-local tab2Page = createTabPage("Tab2Page")
-local tab3Page = createTabPage("Tab3Page")
-local tab4Page = createTabPage("Tab4Page")
-local tab5Page = createTabPage("Tab5Page")
-local tab6Page = createTabPage("Tab6Page")
+local tab1Page = createTabPage("Tab1Page", false)
+local tab2Page = createTabPage("Tab2Page", false)
+local tab3Page = createTabPage("Tab3Page", false)
+local tab4Page = createTabPage("Tab4Page", true) -- Visuals scrollbar
+local tab5Page = createTabPage("Tab5Page", false)
+local tab6Page = createTabPage("Tab6Page", false)
 tab1Page.Visible = true
 
 ---------------------------------------------------------
@@ -277,11 +292,25 @@ local function createSlider(parent, name, labelText, yPos)
 	return label, track, fill, btn
 end
 
--- TAB 1
-local speedLabel, speedTrack, speedFill, speedButton = createSlider(tab1Page, "Speed", "WalkSpeed: 16", 10)
-local jumpLabel, jumpTrack, jumpFill, jumpButton = createSlider(tab1Page, "Jump", "JumpPower: 50", 60)
+-- TAB 1 (Movement)
+local speedLabel, speedTrack, speedFill, speedButton = createSlider(tab1Page, "Speed", "WalkSpeed: 16", 6)
+local jumpLabel, jumpTrack, jumpFill, jumpButton = createSlider(tab1Page, "Jump", "JumpPower: 50", 52)
 
--- TAB 2
+local doubleJumpBtn = Instance.new("TextButton")
+doubleJumpBtn.Name = "DoubleJumpBtn"
+doubleJumpBtn.Size = UDim2.new(0.94, 0, 0, 26)
+doubleJumpBtn.Position = UDim2.new(0.03, 0, 0, 98)
+doubleJumpBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
+doubleJumpBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
+doubleJumpBtn.Text = "Double Jump: OFF"
+doubleJumpBtn.TextSize = 11
+doubleJumpBtn.Font = Enum.Font.GothamBold
+doubleJumpBtn.Parent = tab1Page
+local djCorner = Instance.new("UICorner")
+djCorner.CornerRadius = UDim.new(0, 6)
+djCorner.Parent = doubleJumpBtn
+
+-- TAB 2 (Crosshair)
 local rotLabel, rotTrack, rotFill, rotButton = createSlider(tab2Page, "Rot", "Crosshair Rotation: 2", 2)
 local thickLabel, thickTrack, thickFill, thickButton = createSlider(tab2Page, "Thick", "Thickness: 2px", 42)
 local sizeLabel, sizeTrack, sizeFill, sizeButton = createSlider(tab2Page, "Size", "Crosshair Size: 40px", 82)
@@ -382,27 +411,41 @@ local rpCorner = Instance.new("UICorner")
 rpCorner.CornerRadius = UDim.new(0, 6)
 rpCorner.Parent = resetPosBtn
 
--- TAB 3
-local spinLabel, spinTrack, spinFill, spinButton = createSlider(tab3Page, "Spin", "Spin Speed: 50", 15)
+-- TAB 3 (Anti-Aim / Camera)
+local spinLabel, spinTrack, spinFill, spinButton = createSlider(tab3Page, "Spin", "Spin Speed: 50", 10)
 
 local antiAimBtn = Instance.new("TextButton")
 antiAimBtn.Name = "AntiAimBtn"
-antiAimBtn.Size = UDim2.new(0.45, 0, 0, 26)
-antiAimBtn.Position = UDim2.new(0.03, 0, 0, 75)
+antiAimBtn.Size = UDim2.new(0.45, 0, 0, 24)
+antiAimBtn.Position = UDim2.new(0.03, 0, 0, 65)
 antiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 antiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
-antiAimBtn.Text = "Anti-Aim: OFF"
-antiAimBtn.TextSize = 11
+antiAimBtn.Text = "Spin Anti-Aim: OFF"
+antiAimBtn.TextSize = 10
 antiAimBtn.Font = Enum.Font.GothamBold
 antiAimBtn.Parent = tab3Page
 local aaCorner = Instance.new("UICorner")
 aaCorner.CornerRadius = UDim.new(0, 6)
 aaCorner.Parent = antiAimBtn
 
+local backwardAntiAimBtn = Instance.new("TextButton")
+backwardAntiAimBtn.Name = "BackwardAntiAimBtn"
+backwardAntiAimBtn.Size = UDim2.new(0.45, 0, 0, 24)
+backwardAntiAimBtn.Position = UDim2.new(0.52, 0, 0, 65)
+backwardAntiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
+backwardAntiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
+backwardAntiAimBtn.Text = "Backward Anti-Aim: OFF"
+backwardAntiAimBtn.TextSize = 9.5
+backwardAntiAimBtn.Font = Enum.Font.GothamBold
+backwardAntiAimBtn.Parent = tab3Page
+local baaCorner = Instance.new("UICorner")
+baaCorner.CornerRadius = UDim.new(0, 6)
+baaCorner.Parent = backwardAntiAimBtn
+
 local cameraModeBtn = Instance.new("TextButton")
 cameraModeBtn.Name = "CameraModeBtn"
-cameraModeBtn.Size = UDim2.new(0.45, 0, 0, 26)
-cameraModeBtn.Position = UDim2.new(0.52, 0, 0, 75)
+cameraModeBtn.Size = UDim2.new(0.94, 0, 0, 24)
+cameraModeBtn.Position = UDim2.new(0.03, 0, 0, 98)
 cameraModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 cameraModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 cameraModeBtn.Text = "Camera: First Person"
@@ -414,7 +457,7 @@ cmCorner.CornerRadius = UDim.new(0, 6)
 cmCorner.Parent = cameraModeBtn
 
 ---------------------------------------------------------
--- TAB 4 (VISUALS) - REIHENFOLGE ANGEPASST
+-- TAB 4 (VISUALS - SCROLLABLE)
 ---------------------------------------------------------
 local nameTagsBtn = Instance.new("TextButton")
 nameTagsBtn.Name = "NameTagsBtn"
@@ -432,7 +475,6 @@ ntCorner.Parent = nameTagsBtn
 
 local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 34)
 
--- NIGHT MODE KNOPF ("K" ENTFERNT)
 local nightModeBtn = Instance.new("TextButton")
 nightModeBtn.Name = "NightModeBtn"
 nightModeBtn.Size = UDim2.new(0.94, 0, 0, 24)
@@ -447,7 +489,6 @@ local nmCorner = Instance.new("UICorner")
 nmCorner.CornerRadius = UDim.new(0, 6)
 nmCorner.Parent = nightModeBtn
 
--- WEAPON CAMO (DARUNTER)
 local weaponCamoBtn = Instance.new("TextButton")
 weaponCamoBtn.Name = "WeaponCamoBtn"
 weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 24)
@@ -462,22 +503,20 @@ local wcCorner = Instance.new("UICorner")
 wcCorner.CornerRadius = UDim.new(0, 6)
 wcCorner.Parent = weaponCamoBtn
 
--- INVISIBLE WEAPON (DARUNTER)
 local invisibleWeaponBtn = Instance.new("TextButton")
 invisibleWeaponBtn.Name = "InvisibleWeaponBtn"
 invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 24)
 invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 130)
 invisibleWeaponBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 invisibleWeaponBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
-invisibleWeaponBtn.Text = "Invisible Weapon: OFF"
-invisibleWeaponBtn.TextSize = 11
+invisibleWeaponBtn.Text = "Invisible Weapon & Arms: OFF"
+invisibleWeaponBtn.TextSize = 10.5
 invisibleWeaponBtn.Font = Enum.Font.GothamBold
 invisibleWeaponBtn.Parent = tab4Page
 local iwCorner = Instance.new("UICorner")
 iwCorner.CornerRadius = UDim.new(0, 6)
 iwCorner.Parent = invisibleWeaponBtn
 
--- HINZUGEFÜGTER SKIN CHANGER KNOPF (VISUALS HINTEN)
 local skinChangerBtn = Instance.new("TextButton")
 skinChangerBtn.Name = "SkinChangerBtn"
 skinChangerBtn.Size = UDim2.new(0.94, 0, 0, 24)
@@ -585,11 +624,12 @@ end
 local paletteOpen = false
 camoPaletteToggleBtn.MouseButton1Click:Connect(function()
 	paletteOpen = not paletteOpen
-	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 42) or UDim2.new(0.94, 0, 0, 0)
+	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 70) or UDim2.new(0.94, 0, 0, 0)
 	camoPaletteToggleBtn.Text = paletteOpen and "Camo Palette: OPEN" or "Camo Palette: CLOSED"
 	camoPaletteToggleBtn.BackgroundColor3 = paletteOpen and (buttonRainbowMode and Color3.fromHSV(hue, 1, 1) or activeTabBg) or Color3.fromRGB(40, 32, 52)
 	camoPaletteToggleBtn.TextColor3 = paletteOpen and activeTabTxt or Color3.fromRGB(220, 220, 230)
 	
+	tab4Page.CanvasSize = paletteOpen and UDim2.new(0, 0, 0, 320) or UDim2.new(0, 0, 0, 225)
 	TweenService:Create(paletteFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetSize}):Play()
 end)
 
@@ -851,11 +891,13 @@ local currentEspDist = 1000
 local crosshairActive = true
 local freeCrosshairActive = false
 local antiAimActive = false
+local backwardAntiAimActive = false
 local thirdPersonActive = false
 local weaponCamoActive = false
 local nameTagsActive = false
 local invisibleWeaponActive = false
 local nightModeActive = false
+local doubleJumpActive = false
 local crosshairStyle = "Standard"
 
 local speedOffsetState = -1
@@ -865,16 +907,33 @@ local configFileName = "SpeedCrosshairConfig.json"
 local slidingSpeed, slidingJump, slidingSpin, slidingRot, slidingThick, slidingSize, slidingEspDist = false, false, false, false, false, false, false
 local draggingCrosshair = false
 
--- Custom Sky Objects for Night Mode
+---------------------------------------------------------
+-- DOUBLE JUMP LOGIC
+---------------------------------------------------------
+UserInputService.JumpRequest:Connect(function()
+	if not doubleJumpActive then return end
+	local char = player.Character
+	if not char then return end
+	local root = char:FindFirstChild("HumanoidRootPart")
+	local hum = char:FindFirstChildOfClass("Humanoid")
+	
+	if root and hum then
+		local jumpPower = math.max(currentJumpValue * 1.2, 60)
+		root.Velocity = Vector3.new(root.Velocity.X, jumpPower, root.Velocity.Z)
+		hum:ChangeState(Enum.HumanoidStateType.Jumping)
+	end
+end)
+
+-- Custom Sky Objects for Night Mode (HELLER GEMACHT)
 local customSky = nil
 local customAtmosphere = nil
 
 local function applyNightMode()
 	if nightModeActive then
-		Lighting.ClockTime = 0
-		Lighting.Brightness = 2.65
-		Lighting.Ambient = Color3.fromRGB(80, 70, 105)
-		Lighting.OutdoorAmbient = Color3.fromRGB(100, 90, 130)
+		Lighting.ClockTime = 21 -- Frühnacht, deutlich heller als Mitternacht
+		Lighting.Brightness = 3.8 -- Höhere Helligkeit
+		Lighting.Ambient = Color3.fromRGB(130, 120, 160) -- Angenehm helle Umgebungsfarbe
+		Lighting.OutdoorAmbient = Color3.fromRGB(140, 130, 170)
 		
 		if not Lighting:FindFirstChild("CustomNightSky") then
 			customSky = Instance.new("Sky")
@@ -893,12 +952,12 @@ local function applyNightMode()
 		if not Lighting:FindFirstChild("CustomNightAtmosphere") then
 			customAtmosphere = Instance.new("Atmosphere")
 			customAtmosphere.Name = "CustomNightAtmosphere"
-			customAtmosphere.Density = 0.12
+			customAtmosphere.Density = 0.05
 			customAtmosphere.Offset = 0.25
-			customAtmosphere.Color = Color3.fromRGB(60, 50, 80)
-			customAtmosphere.Decay = Color3.fromRGB(35, 25, 50)
-			customAtmosphere.Glare = 0.4
-			customAtmosphere.Haze = 0.4
+			customAtmosphere.Color = Color3.fromRGB(120, 110, 150)
+			customAtmosphere.Decay = Color3.fromRGB(80, 70, 110)
+			customAtmosphere.Glare = 0.5
+			customAtmosphere.Haze = 0.2
 			customAtmosphere.Parent = Lighting
 		end
 	else
@@ -933,7 +992,7 @@ local function applyStats()
 		hum.JumpPower = activeJump
 		hum.JumpHeight = (activeJump / 50) * 7.2
 		
-		if antiAimActive then
+		if antiAimActive or backwardAntiAimActive then
 			hum.AutoRotate = false
 		else
 			hum.AutoRotate = true
@@ -1025,9 +1084,17 @@ local function updateGUIFromValues()
 		styleSymbolBtn.BackgroundColor3 = curActiveColor; styleSymbolBtn.TextColor3 = activeTabTxt
 	end
 
-	antiAimBtn.Text = antiAimActive and "Anti-Aim: ON" or "Anti-Aim: OFF"
+	doubleJumpBtn.Text = doubleJumpActive and "Double Jump: ON" or "Double Jump: OFF"
+	doubleJumpBtn.BackgroundColor3 = doubleJumpActive and curActiveColor or Color3.fromRGB(40, 32, 52)
+	doubleJumpBtn.TextColor3 = doubleJumpActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
+
+	antiAimBtn.Text = antiAimActive and "Spin Anti-Aim: ON" or "Spin Anti-Aim: OFF"
 	antiAimBtn.BackgroundColor3 = antiAimActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	antiAimBtn.TextColor3 = antiAimActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
+
+	backwardAntiAimBtn.Text = backwardAntiAimActive and "Backward Anti-Aim: ON" or "Backward Anti-Aim: OFF"
+	backwardAntiAimBtn.BackgroundColor3 = backwardAntiAimActive and curActiveColor or Color3.fromRGB(40, 32, 52)
+	backwardAntiAimBtn.TextColor3 = backwardAntiAimActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
 	cameraModeBtn.Text = thirdPersonActive and "Camera: Third Person" or "Camera: First Person"
 	cameraModeBtn.BackgroundColor3 = thirdPersonActive and curActiveColor or Color3.fromRGB(40, 32, 52)
@@ -1041,7 +1108,7 @@ local function updateGUIFromValues()
 	nameTagsBtn.BackgroundColor3 = nameTagsActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	nameTagsBtn.TextColor3 = nameTagsActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
-	invisibleWeaponBtn.Text = invisibleWeaponActive and "Invisible Weapon: ON" or "Invisible Weapon: OFF"
+	invisibleWeaponBtn.Text = invisibleWeaponActive and "Invisible Weapon & Arms: ON" or "Invisible Weapon & Arms: OFF"
 	invisibleWeaponBtn.BackgroundColor3 = invisibleWeaponActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	invisibleWeaponBtn.TextColor3 = invisibleWeaponActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
@@ -1052,6 +1119,9 @@ local function updateGUIFromValues()
 	applyStats()
 end
 
+---------------------------------------------------------
+-- CONFIG EVERYTHING SAVER / LOADER
+---------------------------------------------------------
 local function saveConfig()
 	local data = {
 		WalkSpeed = currentSpeedValue,
@@ -1064,11 +1134,13 @@ local function saveConfig()
 		CrosshairOn = crosshairActive,
 		FreeCrosshairOn = freeCrosshairActive,
 		AntiAimOn = antiAimActive,
+		BackwardAntiAimOn = backwardAntiAimActive,
 		ThirdPersonOn = thirdPersonActive,
 		WeaponCamoOn = weaponCamoActive,
 		NameTagsOn = nameTagsActive,
 		InvisibleWeaponOn = invisibleWeaponActive,
 		NightModeOn = nightModeActive,
+		DoubleJumpOn = doubleJumpActive,
 		CamoIndex = selectedColorIndex,
 		CrossStyle = crosshairStyle,
 		PosX = customPosX,
@@ -1110,11 +1182,13 @@ local function loadConfig()
 			end
 			
 			antiAimActive = result.AntiAimOn or false
+			backwardAntiAimActive = result.BackwardAntiAimOn or false
 			thirdPersonActive = result.ThirdPersonOn or false
 			weaponCamoActive = result.WeaponCamoOn or false
 			nameTagsActive = result.NameTagsOn or false
 			invisibleWeaponActive = result.InvisibleWeaponOn or false
 			nightModeActive = result.NightModeOn or false
+			doubleJumpActive = result.DoubleJumpOn or false
 			selectedColorIndex = result.CamoIndex or 1
 			crosshairStyle = result.CrossStyle or "Standard"
 			
@@ -1187,6 +1261,11 @@ serverHopBtn.MouseButton1Click:Connect(function()
 	end)
 end)
 
+doubleJumpBtn.MouseButton1Click:Connect(function()
+	doubleJumpActive = not doubleJumpActive
+	updateGUIFromValues()
+end)
+
 nameTagsBtn.MouseButton1Click:Connect(function()
 	nameTagsActive = not nameTagsActive
 	updateGUIFromValues()
@@ -1202,6 +1281,7 @@ nightModeBtn.MouseButton1Click:Connect(function()
 	updateGUIFromValues()
 end)
 
+-- NAME ESP LOOP (KLEINER GEMACHT)
 RunService.RenderStepped:Connect(function()
 	local myChar = player.Character
 	local myRoot = myChar and myChar:FindFirstChild("HumanoidRootPart")
@@ -1225,8 +1305,8 @@ RunService.RenderStepped:Connect(function()
 					if not tag then
 						tag = Instance.new("BillboardGui")
 						tag.Name = "CustomNameTag"
-						tag.Size = UDim2.new(0, 100, 0, 40)
-						tag.StudsOffset = Vector3.new(0, 2.5, 0)
+						tag.Size = UDim2.new(0, 100, 0, 24)
+						tag.StudsOffset = Vector3.new(0, 2.2, 0)
 						tag.AlwaysOnTop = true
 						tag.Parent = head
 
@@ -1236,7 +1316,7 @@ RunService.RenderStepped:Connect(function()
 						txt.BackgroundTransparency = 1
 						txt.TextColor3 = Color3.fromRGB(255, 255, 255)
 						txt.TextStrokeTransparency = 0.5
-						txt.TextSize = 14
+						txt.TextSize = 9 -- DEUTLICH KLEINER
 						txt.Font = Enum.Font.GothamBold
 						txt.Parent = tag
 					end
@@ -1263,22 +1343,43 @@ end)
 
 antiAimBtn.MouseButton1Click:Connect(function()
 	antiAimActive = not antiAimActive
+	if antiAimActive then backwardAntiAimActive = false end
 	updateGUIFromValues()
 end)
 
+backwardAntiAimBtn.MouseButton1Click:Connect(function()
+	backwardAntiAimActive = not backwardAntiAimActive
+	if backwardAntiAimActive then antiAimActive = false end
+	updateGUIFromValues()
+end)
+
+---------------------------------------------------------
+-- ANTI-AIM STEPPED LOGIC (Spin & Backward)
+---------------------------------------------------------
 local spinAngle = 0
 RunService.Stepped:Connect(function(_, deltaTime)
-	if antiAimActive and player.Character then
+	if player.Character then
 		local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
 		local hum = player.Character:FindFirstChildOfClass("Humanoid")
-		if hum then hum.AutoRotate = false end
-		if rootPart then
-			spinAngle = (spinAngle + (currentSpinSpeed * 10 * deltaTime)) % (math.pi * 2)
-			rootPart.CFrame = CFrame.new(rootPart.Position) * CFrame.Angles(0, spinAngle, 0)
+		
+		if antiAimActive then
+			if hum then hum.AutoRotate = false end
+			if rootPart then
+				spinAngle = (spinAngle + (currentSpinSpeed * 10 * deltaTime)) % (math.pi * 2)
+				rootPart.CFrame = CFrame.new(rootPart.Position) * CFrame.Angles(0, spinAngle, 0)
+			end
+		elseif backwardAntiAimActive then
+			if hum then hum.AutoRotate = false end
+			if rootPart then
+				local camLook = Camera.CFrame.LookVector
+				local yaw = math.atan2(-camLook.X, -camLook.Z)
+				rootPart.CFrame = CFrame.new(rootPart.Position) * CFrame.Angles(0, yaw + math.pi, 0)
+			end
 		end
 	end
 end)
 
+-- RENDER LOOP (Invis Weapon + Arms in BOTH camera views)
 RunService.RenderStepped:Connect(function(deltaTime)
 	hue = (hue + (deltaTime * 0.5)) % 1
 	local rainbowColor = Color3.fromHSV(hue, 1, 1)
@@ -1310,7 +1411,23 @@ RunService.RenderStepped:Connect(function(deltaTime)
 	title.TextColor3 = rainbowColor
 
 	if player.Character then
-		local tool = player.Character:FindFirstChildOfClass("Tool")
+		local char = player.Character
+		local tool = char:FindFirstChildOfClass("Tool")
+		
+		-- Handle Arms & Hands Translucent/Invisible
+		local armNames = {"RightArm", "LeftArm", "Right Upper Arm", "Right Lower Arm", "RightHand", "Left Upper Arm", "Left Lower Arm", "LeftHand"}
+		for _, name in ipairs(armNames) do
+			local part = char:FindFirstChild(name)
+			if part and part:IsA("BasePart") then
+				if invisibleWeaponActive then
+					part.LocalTransparencyModifier = 1
+					part.Transparency = 1
+				else
+					part.LocalTransparencyModifier = 0
+				end
+			end
+		end
+
 		if tool then
 			local selectedOpt = colorOptions[selectedColorIndex]
 			local chosenColor = Color3.fromRGB(255, 255, 255)
@@ -1339,8 +1456,9 @@ RunService.RenderStepped:Connect(function(deltaTime)
 
 			for _, part in ipairs(tool:GetDescendants()) do
 				if part:IsA("BasePart") then
-					if invisibleWeaponActive and not thirdPersonActive then
+					if invisibleWeaponActive then
 						part.LocalTransparencyModifier = 1
+						part.Transparency = 1
 					else
 						part.LocalTransparencyModifier = 0
 					end
