@@ -143,8 +143,8 @@ titleStroke.Parent = title
 -- Minimize Button (−)
 local minimizeBtn = Instance.new("TextButton")
 minimizeBtn.Name = "MinimizeBtn"
-minimizeBtn.Size = UDim2.new(0, 24, 0, 24)
-minimizeBtn.Position = UDim2.new(1, -30, 0, 6)
+minimizeBtn.Size = UDim2.new(0, 26, 0, 26)
+minimizeBtn.Position = UDim2.new(1, -32, 0, 6)
 minimizeBtn.BackgroundColor3 = Color3.fromRGB(32, 25, 42)
 minimizeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 minimizeBtn.Text = "−"
@@ -161,7 +161,7 @@ minBtnCorner.Parent = minimizeBtn
 ---------------------------------------------------------
 local tabNavFrame = Instance.new("Frame")
 tabNavFrame.Name = "TabNavFrame"
-tabNavFrame.Size = UDim2.new(0.94, 0, 0, 26)
+tabNavFrame.Size = UDim2.new(0.94, 0, 0, 28)
 tabNavFrame.Position = UDim2.new(0.03, 0, 0, 36)
 tabNavFrame.BackgroundColor3 = Color3.fromRGB(15, 12, 20)
 tabNavFrame.BackgroundTransparency = 0.3
@@ -180,7 +180,7 @@ local function createTabBtn(name, text, posScale, sizeWidth)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 24, 40)
 	btn.TextColor3 = Color3.fromRGB(200, 200, 215)
 	btn.Text = text
-	btn.TextSize = 9.5
+	btn.TextSize = 10
 	btn.Font = Enum.Font.GothamBold
 	btn.Parent = tabNavFrame
 	
@@ -213,7 +213,7 @@ local function createTabPage(name, isScrollable)
 		scroll.BorderSizePixel = 0
 		scroll.ScrollBarThickness = 4
 		scroll.ScrollBarImageColor3 = Color3.fromRGB(120, 90, 150)
-		scroll.CanvasSize = UDim2.new(0, 0, 0, 320)
+		scroll.CanvasSize = UDim2.new(0, 0, 0, 260)
 		scroll.Visible = false
 		scroll.Parent = frame
 		return scroll
@@ -230,11 +230,11 @@ local function createTabPage(name, isScrollable)
 end
 
 local tab1Page = createTabPage("Tab1Page", false)
-local tab2Page = createTabPage("Tab2Page", false)
+local tab2Page = createTabPage("Tab2Page", true)  -- Crosshair scrollbar
 local tab3Page = createTabPage("Tab3Page", false)
-local tab4Page = createTabPage("Tab4Page", true) -- Visuals scrollbar
+local tab4Page = createTabPage("Tab4Page", true)  -- Visuals scrollbar
 local tab5Page = createTabPage("Tab5Page", false)
-local tab6Page = createTabPage("Tab6Page", false)
+local tab6Page = createTabPage("Tab6Page", true)  -- Misc scrollbar
 tab1Page.Visible = true
 
 ---------------------------------------------------------
@@ -298,12 +298,12 @@ local jumpLabel, jumpTrack, jumpFill, jumpButton = createSlider(tab1Page, "Jump"
 
 local doubleJumpBtn = Instance.new("TextButton")
 doubleJumpBtn.Name = "DoubleJumpBtn"
-doubleJumpBtn.Size = UDim2.new(0.94, 0, 0, 26)
+doubleJumpBtn.Size = UDim2.new(0.94, 0, 0, 30)
 doubleJumpBtn.Position = UDim2.new(0.03, 0, 0, 98)
 doubleJumpBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 doubleJumpBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 doubleJumpBtn.Text = "Double Jump: OFF"
-doubleJumpBtn.TextSize = 11
+doubleJumpBtn.TextSize = 12
 doubleJumpBtn.Font = Enum.Font.GothamBold
 doubleJumpBtn.Parent = tab1Page
 local djCorner = Instance.new("UICorner")
@@ -317,12 +317,12 @@ local sizeLabel, sizeTrack, sizeFill, sizeButton = createSlider(tab2Page, "Size"
 
 local toggleCrosshairBtn = Instance.new("TextButton")
 toggleCrosshairBtn.Name = "ToggleCrosshairBtn"
-toggleCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 24)
+toggleCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 28)
 toggleCrosshairBtn.Position = UDim2.new(0.03, 0, 0, 122)
 toggleCrosshairBtn.BackgroundColor3 = activeTabBg
 toggleCrosshairBtn.TextColor3 = activeTabTxt
 toggleCrosshairBtn.Text = "Crosshair: ON"
-toggleCrosshairBtn.TextSize = 11
+toggleCrosshairBtn.TextSize = 12
 toggleCrosshairBtn.Font = Enum.Font.GothamBold
 toggleCrosshairBtn.Parent = tab2Page
 local tcCorner = Instance.new("UICorner")
@@ -331,12 +331,12 @@ tcCorner.Parent = toggleCrosshairBtn
 
 local freeCrosshairBtn = Instance.new("TextButton")
 freeCrosshairBtn.Name = "FreeCrosshairBtn"
-freeCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 24)
+freeCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 28)
 freeCrosshairBtn.Position = UDim2.new(0.52, 0, 0, 122)
 freeCrosshairBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 freeCrosshairBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 freeCrosshairBtn.Text = "Free Crosshair: OFF"
-freeCrosshairBtn.TextSize = 11
+freeCrosshairBtn.TextSize = 12
 freeCrosshairBtn.Font = Enum.Font.GothamBold
 freeCrosshairBtn.Parent = tab2Page
 local fcCorner = Instance.new("UICorner")
@@ -346,7 +346,7 @@ fcCorner.Parent = freeCrosshairBtn
 local styleLabel = Instance.new("TextLabel")
 styleLabel.Name = "StyleLabel"
 styleLabel.Size = UDim2.new(1, -20, 0, 16)
-styleLabel.Position = UDim2.new(0, 12, 0, 150)
+styleLabel.Position = UDim2.new(0, 12, 0, 155)
 styleLabel.BackgroundTransparency = 1
 styleLabel.Text = "Crosshair Style / Symbol:"
 styleLabel.TextColor3 = Color3.fromRGB(200, 200, 215)
@@ -357,8 +357,8 @@ styleLabel.Parent = tab2Page
 
 local styleStandardBtn = Instance.new("TextButton")
 styleStandardBtn.Name = "StyleStandardBtn"
-styleStandardBtn.Size = UDim2.new(0.30, 0, 0, 24)
-styleStandardBtn.Position = UDim2.new(0.03, 0, 0, 170)
+styleStandardBtn.Size = UDim2.new(0.30, 0, 0, 28)
+styleStandardBtn.Position = UDim2.new(0.03, 0, 0, 175)
 styleStandardBtn.BackgroundColor3 = activeTabBg
 styleStandardBtn.TextColor3 = activeTabTxt
 styleStandardBtn.Text = "Standard"
@@ -371,8 +371,8 @@ ssCorner.Parent = styleStandardBtn
 
 local styleNorwegenBtn = Instance.new("TextButton")
 styleNorwegenBtn.Name = "StyleNorwegenBtn"
-styleNorwegenBtn.Size = UDim2.new(0.30, 0, 0, 24)
-styleNorwegenBtn.Position = UDim2.new(0.35, 0, 0, 170)
+styleNorwegenBtn.Size = UDim2.new(0.30, 0, 0, 28)
+styleNorwegenBtn.Position = UDim2.new(0.35, 0, 0, 175)
 styleNorwegenBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 styleNorwegenBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 styleNorwegenBtn.Text = "🇳🇴"
@@ -385,8 +385,8 @@ snCorner.Parent = styleNorwegenBtn
 
 local styleSymbolBtn = Instance.new("TextButton")
 styleSymbolBtn.Name = "StyleSymbolBtn"
-styleSymbolBtn.Size = UDim2.new(0.28, 0, 0, 24)
-styleSymbolBtn.Position = UDim2.new(0.67, 0, 0, 170)
+styleSymbolBtn.Size = UDim2.new(0.28, 0, 0, 28)
+styleSymbolBtn.Position = UDim2.new(0.67, 0, 0, 175)
 styleSymbolBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 styleSymbolBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 styleSymbolBtn.Text = "卍"
@@ -399,8 +399,8 @@ syCorner.Parent = styleSymbolBtn
 
 local resetPosBtn = Instance.new("TextButton")
 resetPosBtn.Name = "ResetPosBtn"
-resetPosBtn.Size = UDim2.new(0.94, 0, 0, 24)
-resetPosBtn.Position = UDim2.new(0.03, 0, 0, 198)
+resetPosBtn.Size = UDim2.new(0.94, 0, 0, 28)
+resetPosBtn.Position = UDim2.new(0.03, 0, 0, 208)
 resetPosBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 resetPosBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 resetPosBtn.Text = "Reset Crosshair Position"
@@ -416,12 +416,12 @@ local spinLabel, spinTrack, spinFill, spinButton = createSlider(tab3Page, "Spin"
 
 local antiAimBtn = Instance.new("TextButton")
 antiAimBtn.Name = "AntiAimBtn"
-antiAimBtn.Size = UDim2.new(0.45, 0, 0, 24)
+antiAimBtn.Size = UDim2.new(0.45, 0, 0, 28)
 antiAimBtn.Position = UDim2.new(0.03, 0, 0, 65)
 antiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 antiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 antiAimBtn.Text = "Spin Anti-Aim: OFF"
-antiAimBtn.TextSize = 10
+antiAimBtn.TextSize = 11
 antiAimBtn.Font = Enum.Font.GothamBold
 antiAimBtn.Parent = tab3Page
 local aaCorner = Instance.new("UICorner")
@@ -430,12 +430,12 @@ aaCorner.Parent = antiAimBtn
 
 local backwardAntiAimBtn = Instance.new("TextButton")
 backwardAntiAimBtn.Name = "BackwardAntiAimBtn"
-backwardAntiAimBtn.Size = UDim2.new(0.45, 0, 0, 24)
+backwardAntiAimBtn.Size = UDim2.new(0.45, 0, 0, 28)
 backwardAntiAimBtn.Position = UDim2.new(0.52, 0, 0, 65)
 backwardAntiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 backwardAntiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 backwardAntiAimBtn.Text = "Backward Anti-Aim: OFF"
-backwardAntiAimBtn.TextSize = 9.5
+backwardAntiAimBtn.TextSize = 10
 backwardAntiAimBtn.Font = Enum.Font.GothamBold
 backwardAntiAimBtn.Parent = tab3Page
 local baaCorner = Instance.new("UICorner")
@@ -444,12 +444,12 @@ baaCorner.Parent = backwardAntiAimBtn
 
 local cameraModeBtn = Instance.new("TextButton")
 cameraModeBtn.Name = "CameraModeBtn"
-cameraModeBtn.Size = UDim2.new(0.94, 0, 0, 24)
-cameraModeBtn.Position = UDim2.new(0.03, 0, 0, 98)
+cameraModeBtn.Size = UDim2.new(0.94, 0, 0, 30)
+cameraModeBtn.Position = UDim2.new(0.03, 0, 0, 102)
 cameraModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 cameraModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 cameraModeBtn.Text = "Camera: First Person"
-cameraModeBtn.TextSize = 11
+cameraModeBtn.TextSize = 12
 cameraModeBtn.Font = Enum.Font.GothamBold
 cameraModeBtn.Parent = tab3Page
 local cmCorner = Instance.new("UICorner")
@@ -461,28 +461,28 @@ cmCorner.Parent = cameraModeBtn
 ---------------------------------------------------------
 local nameTagsBtn = Instance.new("TextButton")
 nameTagsBtn.Name = "NameTagsBtn"
-nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 24)
+nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 28)
 nameTagsBtn.Position = UDim2.new(0.03, 0, 0, 5)
 nameTagsBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 nameTagsBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 nameTagsBtn.Text = "Name ESP: OFF"
-nameTagsBtn.TextSize = 11
+nameTagsBtn.TextSize = 12
 nameTagsBtn.Font = Enum.Font.GothamBold
 nameTagsBtn.Parent = tab4Page
 local ntCorner = Instance.new("UICorner")
 ntCorner.CornerRadius = UDim.new(0, 6)
 ntCorner.Parent = nameTagsBtn
 
-local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 34)
+local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 38)
 
 local nightModeBtn = Instance.new("TextButton")
 nightModeBtn.Name = "NightModeBtn"
-nightModeBtn.Size = UDim2.new(0.94, 0, 0, 24)
-nightModeBtn.Position = UDim2.new(0.03, 0, 0, 74)
+nightModeBtn.Size = UDim2.new(0.94, 0, 0, 28)
+nightModeBtn.Position = UDim2.new(0.03, 0, 0, 80)
 nightModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 nightModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 nightModeBtn.Text = "Night Mode: OFF"
-nightModeBtn.TextSize = 11
+nightModeBtn.TextSize = 12
 nightModeBtn.Font = Enum.Font.GothamBold
 nightModeBtn.Parent = tab4Page
 local nmCorner = Instance.new("UICorner")
@@ -491,12 +491,12 @@ nmCorner.Parent = nightModeBtn
 
 local weaponCamoBtn = Instance.new("TextButton")
 weaponCamoBtn.Name = "WeaponCamoBtn"
-weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 24)
-weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 102)
+weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 28)
+weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 114)
 weaponCamoBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 weaponCamoBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 weaponCamoBtn.Text = "Weapon Camo: OFF"
-weaponCamoBtn.TextSize = 11
+weaponCamoBtn.TextSize = 12
 weaponCamoBtn.Font = Enum.Font.GothamBold
 weaponCamoBtn.Parent = tab4Page
 local wcCorner = Instance.new("UICorner")
@@ -505,44 +505,26 @@ wcCorner.Parent = weaponCamoBtn
 
 local invisibleWeaponBtn = Instance.new("TextButton")
 invisibleWeaponBtn.Name = "InvisibleWeaponBtn"
-invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 24)
-invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 130)
+invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 28)
+invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 148)
 invisibleWeaponBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 invisibleWeaponBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 invisibleWeaponBtn.Text = "Invisible Weapon & Arms: OFF"
-invisibleWeaponBtn.TextSize = 10.5
+invisibleWeaponBtn.TextSize = 11.5
 invisibleWeaponBtn.Font = Enum.Font.GothamBold
 invisibleWeaponBtn.Parent = tab4Page
 local iwCorner = Instance.new("UICorner")
 iwCorner.CornerRadius = UDim.new(0, 6)
 iwCorner.Parent = invisibleWeaponBtn
 
-local skinChangerBtn = Instance.new("TextButton")
-skinChangerBtn.Name = "SkinChangerBtn"
-skinChangerBtn.Size = UDim2.new(0.94, 0, 0, 24)
-skinChangerBtn.Position = UDim2.new(0.03, 0, 0, 158)
-skinChangerBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
-skinChangerBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
-skinChangerBtn.Text = "Skin Changer (LvL8)"
-skinChangerBtn.TextSize = 11
-skinChangerBtn.Font = Enum.Font.GothamBold
-skinChangerBtn.Parent = tab4Page
-local scBtnCorner = Instance.new("UICorner")
-scBtnCorner.CornerRadius = UDim.new(0, 6)
-scBtnCorner.Parent = skinChangerBtn
-
-skinChangerBtn.MouseButton1Click:Connect(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Balsback7/sniperduels/refs/heads/main/main", true))()
-end)
-
 local camoPaletteToggleBtn = Instance.new("TextButton")
 camoPaletteToggleBtn.Name = "CamoPaletteToggleBtn"
-camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 24)
-camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 186)
+camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 28)
+camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 182)
 camoPaletteToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 camoPaletteToggleBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 camoPaletteToggleBtn.Text = "Camo Palette: CLOSED"
-camoPaletteToggleBtn.TextSize = 11
+camoPaletteToggleBtn.TextSize = 12
 camoPaletteToggleBtn.Font = Enum.Font.GothamBold
 camoPaletteToggleBtn.Parent = tab4Page
 local cptCorner = Instance.new("UICorner")
@@ -552,7 +534,7 @@ cptCorner.Parent = camoPaletteToggleBtn
 local paletteFrame = Instance.new("Frame")
 paletteFrame.Name = "PaletteFrame"
 paletteFrame.Size = UDim2.new(0.94, 0, 0, 0)
-paletteFrame.Position = UDim2.new(0.03, 0, 0, 213)
+paletteFrame.Position = UDim2.new(0.03, 0, 0, 214)
 paletteFrame.BackgroundTransparency = 1
 paletteFrame.ClipsDescendants = true
 paletteFrame.Parent = tab4Page
@@ -629,11 +611,13 @@ camoPaletteToggleBtn.MouseButton1Click:Connect(function()
 	camoPaletteToggleBtn.BackgroundColor3 = paletteOpen and (buttonRainbowMode and Color3.fromHSV(hue, 1, 1) or activeTabBg) or Color3.fromRGB(40, 32, 52)
 	camoPaletteToggleBtn.TextColor3 = paletteOpen and activeTabTxt or Color3.fromRGB(220, 220, 230)
 	
-	tab4Page.CanvasSize = paletteOpen and UDim2.new(0, 0, 0, 320) or UDim2.new(0, 0, 0, 225)
+	tab4Page.CanvasSize = paletteOpen and UDim2.new(0, 0, 0, 300) or UDim2.new(0, 0, 0, 225)
 	TweenService:Create(paletteFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetSize}):Play()
 end)
 
+---------------------------------------------------------
 -- TAB 5 (SERVER)
+---------------------------------------------------------
 local serverInfoLabel = Instance.new("TextLabel")
 serverInfoLabel.Name = "ServerInfoLabel"
 serverInfoLabel.Size = UDim2.new(1, -20, 0, 30)
@@ -648,7 +632,7 @@ serverInfoLabel.Parent = tab5Page
 
 local rejoinBtn = Instance.new("TextButton")
 rejoinBtn.Name = "RejoinBtn"
-rejoinBtn.Size = UDim2.new(0.94, 0, 0, 35)
+rejoinBtn.Size = UDim2.new(0.94, 0, 0, 38)
 rejoinBtn.Position = UDim2.new(0.03, 0, 0, 50)
 rejoinBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 rejoinBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
@@ -662,8 +646,8 @@ rjCorner.Parent = rejoinBtn
 
 local serverHopBtn = Instance.new("TextButton")
 serverHopBtn.Name = "ServerHopBtn"
-serverHopBtn.Size = UDim2.new(0.94, 0, 0, 35)
-serverHopBtn.Position = UDim2.new(0.03, 0, 0, 95)
+serverHopBtn.Size = UDim2.new(0.94, 0, 0, 38)
+serverHopBtn.Position = UDim2.new(0.03, 0, 0, 98)
 serverHopBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 serverHopBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 serverHopBtn.Text = "Server Hop (New Server)"
@@ -675,7 +659,7 @@ shCorner.CornerRadius = UDim.new(0, 6)
 shCorner.Parent = serverHopBtn
 
 ---------------------------------------------------------
--- TAB 6 (MISC / CUSTOMIZATION)
+-- TAB 6 (MISC / CUSTOMIZATION & CONFIG)
 ---------------------------------------------------------
 local miscTitle = Instance.new("TextLabel")
 miscTitle.Name = "MiscTitle"
@@ -712,7 +696,7 @@ local function createUIColorPicker(parent, yPos, labelText, callback)
 	}
 
 	local container = Instance.new("Frame")
-	container.Size = UDim2.new(0.94, 0, 0, 24)
+	container.Size = UDim2.new(0.94, 0, 0, 26)
 	container.Position = UDim2.new(0.03, 0, 0, yPos + 18)
 	container.BackgroundTransparency = 1
 	container.Parent = parent
@@ -722,7 +706,7 @@ local function createUIColorPicker(parent, yPos, labelText, callback)
 		b.Size = UDim2.new(1 / #colorsList, -2, 1, 0)
 		b.Position = UDim2.new((i - 1) / #colorsList, 0, 0, 0)
 		b.Text = colData.Name
-		b.TextSize = 8
+		b.TextSize = 8.5
 		b.Font = Enum.Font.GothamBold
 		b.TextColor3 = Color3.fromRGB(255, 255, 255)
 		b.Parent = container
@@ -764,7 +748,7 @@ createUIColorPicker(tab6Page, 30, "Menu Border (UIStroke) Color:", function(col)
 end)
 
 -- Button Active/Accent Color Picker
-createUIColorPicker(tab6Page, 85, "Active Button Accent Color:", function(col)
+createUIColorPicker(tab6Page, 90, "Active Button Accent Color:", function(col)
 	if col == "Rainbow" then
 		buttonRainbowMode = true
 	else
@@ -774,41 +758,42 @@ createUIColorPicker(tab6Page, 85, "Active Button Accent Color:", function(col)
 	end
 end)
 
----------------------------------------------------------
--- FOOTER
----------------------------------------------------------
+-- Config Save/Load Buttons moved inside Tab 6 (Misc)
 local saveConfigBtn = Instance.new("TextButton")
 saveConfigBtn.Name = "SaveConfigBtn"
-saveConfigBtn.Size = UDim2.new(0.45, 0, 0, 22)
-saveConfigBtn.Position = UDim2.new(0.03, 0, 0, 298)
+saveConfigBtn.Size = UDim2.new(0.45, 0, 0, 28)
+saveConfigBtn.Position = UDim2.new(0.03, 0, 0, 155)
 saveConfigBtn.BackgroundColor3 = activeTabBg
 saveConfigBtn.TextColor3 = activeTabTxt
 saveConfigBtn.Text = "Save Config"
-saveConfigBtn.TextSize = 11
+saveConfigBtn.TextSize = 11.5
 saveConfigBtn.Font = Enum.Font.GothamBold
-saveConfigBtn.Parent = frame
+saveConfigBtn.Parent = tab6Page
 local scCorner = Instance.new("UICorner")
 scCorner.CornerRadius = UDim.new(0, 6)
 scCorner.Parent = saveConfigBtn
 
 local loadConfigBtn = Instance.new("TextButton")
 loadConfigBtn.Name = "LoadConfigBtn"
-loadConfigBtn.Size = UDim2.new(0.45, 0, 0, 22)
-loadConfigBtn.Position = UDim2.new(0.52, 0, 0, 298)
+loadConfigBtn.Size = UDim2.new(0.45, 0, 0, 28)
+loadConfigBtn.Position = UDim2.new(0.52, 0, 0, 155)
 loadConfigBtn.BackgroundColor3 = activeTabBg
 loadConfigBtn.TextColor3 = activeTabTxt
 loadConfigBtn.Text = "Load Config"
-loadConfigBtn.TextSize = 11
+loadConfigBtn.TextSize = 11.5
 loadConfigBtn.Font = Enum.Font.GothamBold
-loadConfigBtn.Parent = frame
+loadConfigBtn.Parent = tab6Page
 local lcCorner = Instance.new("UICorner")
 lcCorner.CornerRadius = UDim.new(0, 6)
 lcCorner.Parent = loadConfigBtn
 
+---------------------------------------------------------
+-- FOOTER (Status Label only)
+---------------------------------------------------------
 local statusLabel = Instance.new("TextLabel")
 statusLabel.Name = "StatusLabel"
 statusLabel.Size = UDim2.new(1, 0, 0, 16)
-statusLabel.Position = UDim2.new(0, 0, 0, 325)
+statusLabel.Position = UDim2.new(0, 0, 0, 326)
 statusLabel.BackgroundTransparency = 1
 statusLabel.Text = "Loop: Auto-Active"
 statusLabel.TextColor3 = Color3.fromRGB(150, 130, 170)
@@ -907,6 +892,9 @@ local configFileName = "SpeedCrosshairConfig.json"
 local slidingSpeed, slidingJump, slidingSpin, slidingRot, slidingThick, slidingSize, slidingEspDist = false, false, false, false, false, false, false
 local draggingCrosshair = false
 
+-- Caching Table for original part properties (prevents permanent glowing blocks)
+local originalPartData = {}
+
 ---------------------------------------------------------
 -- DOUBLE JUMP LOGIC
 ---------------------------------------------------------
@@ -924,16 +912,16 @@ UserInputService.JumpRequest:Connect(function()
 	end
 end)
 
--- Custom Sky Objects for Night Mode (HELLER GEMACHT)
+-- Custom Sky Objects for Night Mode
 local customSky = nil
 local customAtmosphere = nil
 
 local function applyNightMode()
 	if nightModeActive then
-		Lighting.ClockTime = 21 -- Frühnacht, deutlich heller als Mitternacht
-		Lighting.Brightness = 3.8 -- Höhere Helligkeit
-		Lighting.Ambient = Color3.fromRGB(130, 120, 160) -- Angenehm helle Umgebungsfarbe
-		Lighting.OutdoorAmbient = Color3.fromRGB(140, 130, 170)
+		Lighting.ClockTime = 20
+		Lighting.Brightness = 4.5
+		Lighting.Ambient = Color3.fromRGB(150, 140, 180)
+		Lighting.OutdoorAmbient = Color3.fromRGB(160, 150, 190)
 		
 		if not Lighting:FindFirstChild("CustomNightSky") then
 			customSky = Instance.new("Sky")
@@ -952,12 +940,12 @@ local function applyNightMode()
 		if not Lighting:FindFirstChild("CustomNightAtmosphere") then
 			customAtmosphere = Instance.new("Atmosphere")
 			customAtmosphere.Name = "CustomNightAtmosphere"
-			customAtmosphere.Density = 0.05
-			customAtmosphere.Offset = 0.25
-			customAtmosphere.Color = Color3.fromRGB(120, 110, 150)
-			customAtmosphere.Decay = Color3.fromRGB(80, 70, 110)
-			customAtmosphere.Glare = 0.5
-			customAtmosphere.Haze = 0.2
+			customAtmosphere.Density = 0.035
+			customAtmosphere.Offset = 0.35
+			customAtmosphere.Color = Color3.fromRGB(150, 140, 180)
+			customAtmosphere.Decay = Color3.fromRGB(100, 90, 130)
+			customAtmosphere.Glare = 0.6
+			customAtmosphere.Haze = 0.15
 			customAtmosphere.Parent = Lighting
 		end
 	else
@@ -1120,7 +1108,7 @@ local function updateGUIFromValues()
 end
 
 ---------------------------------------------------------
--- CONFIG EVERYTHING SAVER / LOADER
+-- CONFIG SYSTEM
 ---------------------------------------------------------
 local function saveConfig()
 	local data = {
@@ -1281,7 +1269,7 @@ nightModeBtn.MouseButton1Click:Connect(function()
 	updateGUIFromValues()
 end)
 
--- NAME ESP LOOP (KLEINER GEMACHT)
+-- NAME ESP LOOP
 RunService.RenderStepped:Connect(function()
 	local myChar = player.Character
 	local myRoot = myChar and myChar:FindFirstChild("HumanoidRootPart")
@@ -1316,7 +1304,7 @@ RunService.RenderStepped:Connect(function()
 						txt.BackgroundTransparency = 1
 						txt.TextColor3 = Color3.fromRGB(255, 255, 255)
 						txt.TextStrokeTransparency = 0.5
-						txt.TextSize = 9 -- DEUTLICH KLEINER
+						txt.TextSize = 9
 						txt.Font = Enum.Font.GothamBold
 						txt.Parent = tag
 					end
@@ -1354,7 +1342,7 @@ backwardAntiAimBtn.MouseButton1Click:Connect(function()
 end)
 
 ---------------------------------------------------------
--- ANTI-AIM STEPPED LOGIC (Spin & Backward)
+-- ANTI-AIM STEPPED LOGIC
 ---------------------------------------------------------
 local spinAngle = 0
 RunService.Stepped:Connect(function(_, deltaTime)
@@ -1379,7 +1367,9 @@ RunService.Stepped:Connect(function(_, deltaTime)
 	end
 end)
 
--- RENDER LOOP (Invis Weapon + Arms in BOTH camera views)
+---------------------------------------------------------
+-- RENDER LOOP (Invis Weapon + Arms + Scope + Caching Fix)
+---------------------------------------------------------
 RunService.RenderStepped:Connect(function(deltaTime)
 	hue = (hue + (deltaTime * 0.5)) % 1
 	local rainbowColor = Color3.fromHSV(hue, 1, 1)
@@ -1412,22 +1402,35 @@ RunService.RenderStepped:Connect(function(deltaTime)
 
 	if player.Character then
 		local char = player.Character
-		local tool = char:FindFirstChildOfClass("Tool")
 		
-		-- Handle Arms & Hands Translucent/Invisible
+		-- Handle Arms & Hands with caching
 		local armNames = {"RightArm", "LeftArm", "Right Upper Arm", "Right Lower Arm", "RightHand", "Left Upper Arm", "Left Lower Arm", "LeftHand"}
 		for _, name in ipairs(armNames) do
 			local part = char:FindFirstChild(name)
 			if part and part:IsA("BasePart") then
+				if not originalPartData[part] then
+					originalPartData[part] = {
+						Transparency = part.Transparency,
+						LocalTransparencyModifier = part.LocalTransparencyModifier,
+						Material = part.Material,
+						Color = part.Color
+					}
+				end
+				
 				if invisibleWeaponActive then
-					part.LocalTransparencyModifier = 1
 					part.Transparency = 1
+					part.LocalTransparencyModifier = 1
 				else
-					part.LocalTransparencyModifier = 0
+					local orig = originalPartData[part]
+					if orig then
+						part.Transparency = orig.Transparency
+						part.LocalTransparencyModifier = orig.LocalTransparencyModifier
+					end
 				end
 			end
 		end
 
+		local tool = char:FindFirstChildOfClass("Tool")
 		if tool then
 			local selectedOpt = colorOptions[selectedColorIndex]
 			local chosenColor = Color3.fromRGB(255, 255, 255)
@@ -1456,17 +1459,46 @@ RunService.RenderStepped:Connect(function(deltaTime)
 
 			for _, part in ipairs(tool:GetDescendants()) do
 				if part:IsA("BasePart") then
-					if invisibleWeaponActive then
-						part.LocalTransparencyModifier = 1
-						part.Transparency = 1
-					else
-						part.LocalTransparencyModifier = 0
+					if not originalPartData[part] then
+						originalPartData[part] = {
+							Transparency = part.Transparency,
+							LocalTransparencyModifier = part.LocalTransparencyModifier,
+							Material = part.Material,
+							Color = part.Color,
+							Reflectance = part.Reflectance
+						}
 					end
 
-					part.Reflectance = weaponCamoActive and 0.5 or 0
-					if weaponCamoActive then
-						part.Color = chosenColor
-						part.Material = Enum.Material.Neon
+					local pName = part.Name:lower()
+					-- Automatisches unsichtbar machen des Visiers/Scopes auf der Sniper
+					if pName:find("scope") or pName:find("sight") or pName:find("visier") then
+						part.Transparency = 1
+						part.LocalTransparencyModifier = 1
+						part.CanCollide = false
+					else
+						local orig = originalPartData[part]
+						
+						if invisibleWeaponActive then
+							part.Transparency = 1
+							part.LocalTransparencyModifier = 1
+						else
+							if orig then
+								part.Transparency = orig.Transparency
+								part.LocalTransparencyModifier = orig.LocalTransparencyModifier
+							end
+						end
+
+						if weaponCamoActive then
+							part.Color = chosenColor
+							part.Material = Enum.Material.Neon
+							part.Reflectance = 0.5
+						else
+							if orig then
+								part.Color = orig.Color
+								part.Material = orig.Material
+								part.Reflectance = orig.Reflectance or 0
+							end
+						end
 					end
 				end
 			end
@@ -1566,6 +1598,7 @@ end)
 
 player.CharacterAdded:Connect(function()
 	task.wait(0.3)
+	originalPartData = {} -- Reset cache on respawn
 	updateGUIFromValues()
 end)
 
