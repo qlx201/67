@@ -230,11 +230,11 @@ local function createTabPage(name, isScrollable)
 end
 
 local tab1Page = createTabPage("Tab1Page", false)
-local tab2Page = createTabPage("Tab2Page", true)  -- Crosshair scrollbar
+local tab2Page = createTabPage("Tab2Page", true)
 local tab3Page = createTabPage("Tab3Page", false)
-local tab4Page = createTabPage("Tab4Page", true)  -- Visuals scrollbar
+local tab4Page = createTabPage("Tab4Page", true)
 local tab5Page = createTabPage("Tab5Page", false)
-local tab6Page = createTabPage("Tab6Page", true)  -- Misc scrollbar
+local tab6Page = createTabPage("Tab6Page", true)
 tab1Page.Visible = true
 
 ---------------------------------------------------------
@@ -1368,7 +1368,7 @@ RunService.Stepped:Connect(function(_, deltaTime)
 end)
 
 ---------------------------------------------------------
--- RENDER LOOP (Invis Weapon + Arms + Scope + Caching Fix)
+-- RENDER LOOP (Invis Weapon + Viewmodel Arms in Camera + Caching)
 ---------------------------------------------------------
 RunService.RenderStepped:Connect(function(deltaTime)
 	hue = (hue + (deltaTime * 0.5)) % 1
@@ -1400,11 +1400,40 @@ RunService.RenderStepped:Connect(function(deltaTime)
 
 	title.TextColor3 = rainbowColor
 
+	local shouldHide = invisibleWeaponActive or thirdPersonStyleActive or thirdPersonActive
+
+	-- 1. Handle Camera Viewmodels & Client First-Person Arms/Weapons
+	for _, desc in ipairs(Camera:GetDescendants()) do
+		if desc:IsA("BasePart") then
+			local nameLower = desc.Name:lower()
+			if nameLower:find("arm") or nameLower:find("hand") or nameLower:find("viewmodel") or nameLower:find("weapon") or nameLower:find("gun") or nameLower:find("blade") or nameLower:find("left") or nameLower:find("right") then
+				if not originalPartData[desc] then
+					originalPartData[desc] = {
+						Transparency = desc.Transparency,
+						LocalTransparencyModifier = desc.LocalTransparencyModifier,
+						Material = desc.Material,
+						Color = desc.Color
+					}
+				end
+				if shouldHide then
+					desc.Transparency = 1
+					desc.LocalTransparencyModifier = 1
+				else
+					local orig = originalPartData[desc]
+					if orig then
+						desc.Transparency = orig.Transparency
+						desc.LocalTransparencyModifier = orig.LocalTransparencyModifier
+					end
+				end
+			end
+		end
+	end
+
 	if player.Character then
 		local char = player.Character
 		
-		-- Handle Arms & Hands with caching
-		local armNames = {"RightArm", "LeftArm", "Right Upper Arm", "Right Lower Arm", "RightHand", "Left Upper Arm", "Left Lower Arm", "LeftHand"}
+		-- 2. Handle Character Arms & Hands (R6 & R15 supported) with secure caching
+		local armNames = {"Right Arm", "Left Arm", "RightArm", "LeftArm", "Right Upper Arm", "Right Lower Arm", "RightHand", "Left Upper Arm", "Left Lower Arm", "LeftHand"}
 		for _, name in ipairs(armNames) do
 			local part = char:FindFirstChild(name)
 			if part and part:IsA("BasePart") then
@@ -1417,7 +1446,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
 					}
 				end
 				
-				if invisibleWeaponActive then
+				if shouldHide then
 					part.Transparency = 1
 					part.LocalTransparencyModifier = 1
 				else
@@ -1445,7 +1474,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
 			end
 
 			local hl = tool:FindFirstChild("WeaponHighlight")
-			if weaponCamoActive then
+			if weaponCamoActive and not shouldHide then
 				if not hl then
 					hl = Instance.new("Highlight")
 					hl.Name = "WeaponHighlight"
@@ -1470,7 +1499,6 @@ RunService.RenderStepped:Connect(function(deltaTime)
 					end
 
 					local pName = part.Name:lower()
-					-- Automatisches unsichtbar machen des Visiers/Scopes auf der Sniper
 					if pName:find("scope") or pName:find("sight") or pName:find("visier") then
 						part.Transparency = 1
 						part.LocalTransparencyModifier = 1
@@ -1478,7 +1506,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
 					else
 						local orig = originalPartData[part]
 						
-						if invisibleWeaponActive then
+						if shouldHide then
 							part.Transparency = 1
 							part.LocalTransparencyModifier = 1
 						else
@@ -1488,7 +1516,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
 							end
 						end
 
-						if weaponCamoActive then
+						if weaponCamoActive and not shouldHide then
 							part.Color = chosenColor
 							part.Material = Enum.Material.Neon
 							part.Reflectance = 0.5
