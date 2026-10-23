@@ -99,12 +99,12 @@ crosshairTextLabel.Visible = false
 crosshairTextLabel.Parent = crosshairFrame
 
 ---------------------------------------------------------
--- MAIN GUI
+-- MAIN GUI (SKALIERBAR)
 ---------------------------------------------------------
 local frame = Instance.new("ImageButton")
 frame.Name = "MainFrame"
-frame.Size = UDim2.new(0, 390, 0, 350)
-frame.Position = UDim2.new(0.5, -195, 0.25, 0)
+frame.Size = UDim2.new(0, 480, 0, 400)
+frame.Position = UDim2.new(0.5, -240, 0.2, 0)
 frame.BackgroundColor3 = Color3.fromRGB(20, 16, 26)
 frame.ScaleType = Enum.ScaleType.Crop
 frame.Image = "rbxassetid://93598324414519"
@@ -125,11 +125,11 @@ uiStroke.Parent = frame
 -- Title
 local title = Instance.new("TextLabel")
 title.Name = "Title"
-title.Size = UDim2.new(1, -35, 0, 26)
+title.Size = UDim2.new(1, -40, 0, 30)
 title.Position = UDim2.new(0, 12, 0, 6)
 title.BackgroundTransparency = 1
 title.Text = "skibidi hub"
-title.TextSize = 15
+title.TextSize = 16
 title.Font = Enum.Font.GothamBold
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -137,18 +137,18 @@ title.Parent = frame
 
 local titleStroke = Instance.new("UIStroke")
 titleStroke.Color = Color3.fromRGB(40, 10, 40)
-titleStroke.Thickness = 0.8
+titleStroke.Thickness = 1
 titleStroke.Parent = title
 
 -- Minimize Button (−)
 local minimizeBtn = Instance.new("TextButton")
 minimizeBtn.Name = "MinimizeBtn"
-minimizeBtn.Size = UDim2.new(0, 26, 0, 26)
-minimizeBtn.Position = UDim2.new(1, -32, 0, 6)
+minimizeBtn.Size = UDim2.new(0, 28, 0, 28)
+minimizeBtn.Position = UDim2.new(1, -36, 0, 6)
 minimizeBtn.BackgroundColor3 = Color3.fromRGB(32, 25, 42)
 minimizeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 minimizeBtn.Text = "−"
-minimizeBtn.TextSize = 16
+minimizeBtn.TextSize = 18
 minimizeBtn.Font = Enum.Font.GothamBold
 minimizeBtn.Parent = frame
 
@@ -157,12 +157,27 @@ minBtnCorner.CornerRadius = UDim.new(0, 6)
 minBtnCorner.Parent = minimizeBtn
 
 ---------------------------------------------------------
+-- RESIZE GRIP (UNTEN RECHTS)
+---------------------------------------------------------
+local resizeGrip = Instance.new("TextButton")
+resizeGrip.Name = "ResizeGrip"
+resizeGrip.Size = UDim2.new(0, 20, 0, 20)
+resizeGrip.Position = UDim2.new(1, -20, 1, -20)
+resizeGrip.BackgroundTransparency = 1
+resizeGrip.Text = "◢"
+resizeGrip.TextSize = 14
+resizeGrip.TextColor3 = Color3.fromRGB(180, 150, 210)
+resizeGrip.Font = Enum.Font.GothamBold
+resizeGrip.ZIndex = 10
+resizeGrip.Parent = frame
+
+---------------------------------------------------------
 -- TAB NAVIGATION BAR
 ---------------------------------------------------------
 local tabNavFrame = Instance.new("Frame")
 tabNavFrame.Name = "TabNavFrame"
-tabNavFrame.Size = UDim2.new(0.94, 0, 0, 28)
-tabNavFrame.Position = UDim2.new(0.03, 0, 0, 36)
+tabNavFrame.Size = UDim2.new(0.94, 0, 0, 32)
+tabNavFrame.Position = UDim2.new(0.03, 0, 0, 40)
 tabNavFrame.BackgroundColor3 = Color3.fromRGB(15, 12, 20)
 tabNavFrame.BackgroundTransparency = 0.3
 tabNavFrame.BorderSizePixel = 0
@@ -180,7 +195,7 @@ local function createTabBtn(name, text, posScale, sizeWidth)
 	btn.BackgroundColor3 = Color3.fromRGB(30, 24, 40)
 	btn.TextColor3 = Color3.fromRGB(200, 200, 215)
 	btn.Text = text
-	btn.TextSize = 10
+	btn.TextSize = 11
 	btn.Font = Enum.Font.GothamBold
 	btn.Parent = tabNavFrame
 	
@@ -201,27 +216,27 @@ tab1Btn.BackgroundColor3 = activeTabBg
 tab1Btn.TextColor3 = activeTabTxt
 
 ---------------------------------------------------------
--- TAB CONTAINERS
+-- TAB CONTAINERS (DYNAMISCHE HÖHE)
 ---------------------------------------------------------
 local function createTabPage(name, isScrollable)
 	if isScrollable then
 		local scroll = Instance.new("ScrollingFrame")
 		scroll.Name = name
-		scroll.Size = UDim2.new(1, 0, 0, 225)
-		scroll.Position = UDim2.new(0, 0, 0, 70)
+		scroll.Size = UDim2.new(1, 0, 1, -100)
+		scroll.Position = UDim2.new(0, 0, 0, 78)
 		scroll.BackgroundTransparency = 1
 		scroll.BorderSizePixel = 0
-		scroll.ScrollBarThickness = 4
-		scroll.ScrollBarImageColor3 = Color3.fromRGB(120, 90, 150)
-		scroll.CanvasSize = UDim2.new(0, 0, 0, 260)
+		scroll.ScrollBarThickness = 5
+		scroll.ScrollBarImageColor3 = Color3.fromRGB(140, 110, 170)
+		scroll.CanvasSize = UDim2.new(0, 0, 0, 520)
 		scroll.Visible = false
 		scroll.Parent = frame
 		return scroll
 	else
 		local page = Instance.new("Frame")
 		page.Name = name
-		page.Size = UDim2.new(1, 0, 0, 225)
-		page.Position = UDim2.new(0, 0, 0, 70)
+		page.Size = UDim2.new(1, 0, 1, -100)
+		page.Position = UDim2.new(0, 0, 0, 78)
 		page.BackgroundTransparency = 1
 		page.Visible = false
 		page.Parent = frame
@@ -243,8 +258,8 @@ tab1Page.Visible = true
 local function createSlider(parent, name, labelText, yPos)
 	local label = Instance.new("TextLabel")
 	label.Name = name .. "Label"
-	label.Size = UDim2.new(1, -20, 0, 16)
-	label.Position = UDim2.new(0, 12, 0, yPos)
+	label.Size = UDim2.new(1, -20, 0, 18)
+	label.Position = UDim2.new(0, 14, 0, yPos)
 	label.BackgroundTransparency = 1
 	label.Text = labelText
 	label.TextColor3 = Color3.fromRGB(200, 200, 215)
@@ -255,8 +270,8 @@ local function createSlider(parent, name, labelText, yPos)
 
 	local track = Instance.new("Frame")
 	track.Name = name .. "Track"
-	track.Size = UDim2.new(0.94, 0, 0, 6)
-	track.Position = UDim2.new(0.03, 0, 0, yPos + 18)
+	track.Size = UDim2.new(0.94, 0, 0, 8)
+	track.Position = UDim2.new(0.03, 0, 0, yPos + 22)
 	track.BackgroundColor3 = Color3.fromRGB(32, 25, 42)
 	track.BackgroundTransparency = 0.3
 	track.BorderSizePixel = 0
@@ -279,8 +294,8 @@ local function createSlider(parent, name, labelText, yPos)
 
 	local btn = Instance.new("TextButton")
 	btn.Name = name .. "Button"
-	btn.Size = UDim2.new(0, 16, 0, 16)
-	btn.Position = UDim2.new(1, -8, 0.5, -8)
+	btn.Size = UDim2.new(0, 18, 0, 18)
+	btn.Position = UDim2.new(1, -9, 0.5, -9)
 	btn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	btn.Text = ""
 	btn.Parent = fill
@@ -293,13 +308,13 @@ local function createSlider(parent, name, labelText, yPos)
 end
 
 -- TAB 1 (Movement)
-local speedLabel, speedTrack, speedFill, speedButton = createSlider(tab1Page, "Speed", "WalkSpeed: 16", 6)
-local jumpLabel, jumpTrack, jumpFill, jumpButton = createSlider(tab1Page, "Jump", "JumpPower: 50", 52)
+local speedLabel, speedTrack, speedFill, speedButton = createSlider(tab1Page, "Speed", "WalkSpeed: 16", 8)
+local jumpLabel, jumpTrack, jumpFill, jumpButton = createSlider(tab1Page, "Jump", "JumpPower: 50", 62)
 
 local doubleJumpBtn = Instance.new("TextButton")
 doubleJumpBtn.Name = "DoubleJumpBtn"
-doubleJumpBtn.Size = UDim2.new(0.94, 0, 0, 30)
-doubleJumpBtn.Position = UDim2.new(0.03, 0, 0, 98)
+doubleJumpBtn.Size = UDim2.new(0.94, 0, 0, 34)
+doubleJumpBtn.Position = UDim2.new(0.03, 0, 0, 120)
 doubleJumpBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 doubleJumpBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 doubleJumpBtn.Text = "Double Jump: OFF"
@@ -311,14 +326,14 @@ djCorner.CornerRadius = UDim.new(0, 6)
 djCorner.Parent = doubleJumpBtn
 
 -- TAB 2 (Crosshair)
-local rotLabel, rotTrack, rotFill, rotButton = createSlider(tab2Page, "Rot", "Crosshair Rotation: 2", 2)
-local thickLabel, thickTrack, thickFill, thickButton = createSlider(tab2Page, "Thick", "Thickness: 2px", 42)
-local sizeLabel, sizeTrack, sizeFill, sizeButton = createSlider(tab2Page, "Size", "Crosshair Size: 40px", 82)
+local rotLabel, rotTrack, rotFill, rotButton = createSlider(tab2Page, "Rot", "Crosshair Rotation: 2", 5)
+local thickLabel, thickTrack, thickFill, thickButton = createSlider(tab2Page, "Thick", "Thickness: 2px", 52)
+local sizeLabel, sizeTrack, sizeFill, sizeButton = createSlider(tab2Page, "Size", "Crosshair Size: 40px", 98)
 
 local toggleCrosshairBtn = Instance.new("TextButton")
 toggleCrosshairBtn.Name = "ToggleCrosshairBtn"
-toggleCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 28)
-toggleCrosshairBtn.Position = UDim2.new(0.03, 0, 0, 122)
+toggleCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 32)
+toggleCrosshairBtn.Position = UDim2.new(0.03, 0, 0, 145)
 toggleCrosshairBtn.BackgroundColor3 = activeTabBg
 toggleCrosshairBtn.TextColor3 = activeTabTxt
 toggleCrosshairBtn.Text = "Crosshair: ON"
@@ -331,8 +346,8 @@ tcCorner.Parent = toggleCrosshairBtn
 
 local freeCrosshairBtn = Instance.new("TextButton")
 freeCrosshairBtn.Name = "FreeCrosshairBtn"
-freeCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 28)
-freeCrosshairBtn.Position = UDim2.new(0.52, 0, 0, 122)
+freeCrosshairBtn.Size = UDim2.new(0.45, 0, 0, 32)
+freeCrosshairBtn.Position = UDim2.new(0.52, 0, 0, 145)
 freeCrosshairBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 freeCrosshairBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 freeCrosshairBtn.Text = "Free Crosshair: OFF"
@@ -345,24 +360,24 @@ fcCorner.Parent = freeCrosshairBtn
 
 local styleLabel = Instance.new("TextLabel")
 styleLabel.Name = "StyleLabel"
-styleLabel.Size = UDim2.new(1, -20, 0, 16)
-styleLabel.Position = UDim2.new(0, 12, 0, 155)
+styleLabel.Size = UDim2.new(1, -20, 0, 18)
+styleLabel.Position = UDim2.new(0, 14, 0, 185)
 styleLabel.BackgroundTransparency = 1
 styleLabel.Text = "Crosshair Style / Symbol:"
 styleLabel.TextColor3 = Color3.fromRGB(200, 200, 215)
-styleLabel.TextSize = 11
+styleLabel.TextSize = 12
 styleLabel.Font = Enum.Font.GothamBold
 styleLabel.TextXAlignment = Enum.TextXAlignment.Left
 styleLabel.Parent = tab2Page
 
 local styleStandardBtn = Instance.new("TextButton")
 styleStandardBtn.Name = "StyleStandardBtn"
-styleStandardBtn.Size = UDim2.new(0.30, 0, 0, 28)
-styleStandardBtn.Position = UDim2.new(0.03, 0, 0, 175)
+styleStandardBtn.Size = UDim2.new(0.30, 0, 0, 32)
+styleStandardBtn.Position = UDim2.new(0.03, 0, 0, 208)
 styleStandardBtn.BackgroundColor3 = activeTabBg
 styleStandardBtn.TextColor3 = activeTabTxt
 styleStandardBtn.Text = "Standard"
-styleStandardBtn.TextSize = 11
+styleStandardBtn.TextSize = 12
 styleStandardBtn.Font = Enum.Font.GothamBold
 styleStandardBtn.Parent = tab2Page
 local ssCorner = Instance.new("UICorner")
@@ -371,12 +386,12 @@ ssCorner.Parent = styleStandardBtn
 
 local styleNorwegenBtn = Instance.new("TextButton")
 styleNorwegenBtn.Name = "StyleNorwegenBtn"
-styleNorwegenBtn.Size = UDim2.new(0.30, 0, 0, 28)
-styleNorwegenBtn.Position = UDim2.new(0.35, 0, 0, 175)
+styleNorwegenBtn.Size = UDim2.new(0.30, 0, 0, 32)
+styleNorwegenBtn.Position = UDim2.new(0.35, 0, 0, 208)
 styleNorwegenBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 styleNorwegenBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 styleNorwegenBtn.Text = "🇳🇴"
-styleNorwegenBtn.TextSize = 14
+styleNorwegenBtn.TextSize = 15
 styleNorwegenBtn.Font = Enum.Font.GothamBold
 styleNorwegenBtn.Parent = tab2Page
 local snCorner = Instance.new("UICorner")
@@ -385,8 +400,8 @@ snCorner.Parent = styleNorwegenBtn
 
 local styleSymbolBtn = Instance.new("TextButton")
 styleSymbolBtn.Name = "StyleSymbolBtn"
-styleSymbolBtn.Size = UDim2.new(0.28, 0, 0, 28)
-styleSymbolBtn.Position = UDim2.new(0.67, 0, 0, 175)
+styleSymbolBtn.Size = UDim2.new(0.28, 0, 0, 32)
+styleSymbolBtn.Position = UDim2.new(0.67, 0, 0, 208)
 styleSymbolBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 styleSymbolBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 styleSymbolBtn.Text = "卍"
@@ -399,12 +414,12 @@ syCorner.Parent = styleSymbolBtn
 
 local resetPosBtn = Instance.new("TextButton")
 resetPosBtn.Name = "ResetPosBtn"
-resetPosBtn.Size = UDim2.new(0.94, 0, 0, 28)
-resetPosBtn.Position = UDim2.new(0.03, 0, 0, 208)
+resetPosBtn.Size = UDim2.new(0.94, 0, 0, 32)
+resetPosBtn.Position = UDim2.new(0.03, 0, 0, 248)
 resetPosBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 resetPosBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 resetPosBtn.Text = "Reset Crosshair Position"
-resetPosBtn.TextSize = 11
+resetPosBtn.TextSize = 12
 resetPosBtn.Font = Enum.Font.GothamBold
 resetPosBtn.Parent = tab2Page
 local rpCorner = Instance.new("UICorner")
@@ -416,12 +431,12 @@ local spinLabel, spinTrack, spinFill, spinButton = createSlider(tab3Page, "Spin"
 
 local antiAimBtn = Instance.new("TextButton")
 antiAimBtn.Name = "AntiAimBtn"
-antiAimBtn.Size = UDim2.new(0.45, 0, 0, 28)
-antiAimBtn.Position = UDim2.new(0.03, 0, 0, 65)
+antiAimBtn.Size = UDim2.new(0.45, 0, 0, 32)
+antiAimBtn.Position = UDim2.new(0.03, 0, 0, 68)
 antiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 antiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 antiAimBtn.Text = "Spin Anti-Aim: OFF"
-antiAimBtn.TextSize = 11
+antiAimBtn.TextSize = 12
 antiAimBtn.Font = Enum.Font.GothamBold
 antiAimBtn.Parent = tab3Page
 local aaCorner = Instance.new("UICorner")
@@ -430,12 +445,12 @@ aaCorner.Parent = antiAimBtn
 
 local backwardAntiAimBtn = Instance.new("TextButton")
 backwardAntiAimBtn.Name = "BackwardAntiAimBtn"
-backwardAntiAimBtn.Size = UDim2.new(0.45, 0, 0, 28)
-backwardAntiAimBtn.Position = UDim2.new(0.52, 0, 0, 65)
+backwardAntiAimBtn.Size = UDim2.new(0.45, 0, 0, 32)
+backwardAntiAimBtn.Position = UDim2.new(0.52, 0, 0, 68)
 backwardAntiAimBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 backwardAntiAimBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 backwardAntiAimBtn.Text = "Backward Anti-Aim: OFF"
-backwardAntiAimBtn.TextSize = 10
+backwardAntiAimBtn.TextSize = 11
 backwardAntiAimBtn.Font = Enum.Font.GothamBold
 backwardAntiAimBtn.Parent = tab3Page
 local baaCorner = Instance.new("UICorner")
@@ -444,8 +459,8 @@ baaCorner.Parent = backwardAntiAimBtn
 
 local cameraModeBtn = Instance.new("TextButton")
 cameraModeBtn.Name = "CameraModeBtn"
-cameraModeBtn.Size = UDim2.new(0.94, 0, 0, 30)
-cameraModeBtn.Position = UDim2.new(0.03, 0, 0, 102)
+cameraModeBtn.Size = UDim2.new(0.94, 0, 0, 34)
+cameraModeBtn.Position = UDim2.new(0.03, 0, 0, 110)
 cameraModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 cameraModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 cameraModeBtn.Text = "Camera: First Person"
@@ -457,12 +472,12 @@ cmCorner.CornerRadius = UDim.new(0, 6)
 cmCorner.Parent = cameraModeBtn
 
 ---------------------------------------------------------
--- TAB 4 (VISUALS - SCROLLABLE)
+-- TAB 4 (VISUALS)
 ---------------------------------------------------------
 local nameTagsBtn = Instance.new("TextButton")
 nameTagsBtn.Name = "NameTagsBtn"
-nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 28)
-nameTagsBtn.Position = UDim2.new(0.03, 0, 0, 5)
+nameTagsBtn.Size = UDim2.new(0.94, 0, 0, 30)
+nameTagsBtn.Position = UDim2.new(0.03, 0, 0, 8)
 nameTagsBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 nameTagsBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 nameTagsBtn.Text = "Name ESP: OFF"
@@ -473,12 +488,12 @@ local ntCorner = Instance.new("UICorner")
 ntCorner.CornerRadius = UDim.new(0, 6)
 ntCorner.Parent = nameTagsBtn
 
-local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 38)
+local espDistLabel, espDistTrack, espDistFill, espDistButton = createSlider(tab4Page, "EspDist", "ESP Distance: 1000 Studs", 45)
 
 local nightModeBtn = Instance.new("TextButton")
 nightModeBtn.Name = "NightModeBtn"
-nightModeBtn.Size = UDim2.new(0.94, 0, 0, 28)
-nightModeBtn.Position = UDim2.new(0.03, 0, 0, 80)
+nightModeBtn.Size = UDim2.new(0.94, 0, 0, 30)
+nightModeBtn.Position = UDim2.new(0.03, 0, 0, 95)
 nightModeBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 nightModeBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 nightModeBtn.Text = "Night Mode: OFF"
@@ -491,8 +506,8 @@ nmCorner.Parent = nightModeBtn
 
 local weaponCamoBtn = Instance.new("TextButton")
 weaponCamoBtn.Name = "WeaponCamoBtn"
-weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 28)
-weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 114)
+weaponCamoBtn.Size = UDim2.new(0.94, 0, 0, 30)
+weaponCamoBtn.Position = UDim2.new(0.03, 0, 0, 132)
 weaponCamoBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 weaponCamoBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 weaponCamoBtn.Text = "Weapon Camo: OFF"
@@ -505,8 +520,8 @@ wcCorner.Parent = weaponCamoBtn
 
 local invisibleWeaponBtn = Instance.new("TextButton")
 invisibleWeaponBtn.Name = "InvisibleWeaponBtn"
-invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 28)
-invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 148)
+invisibleWeaponBtn.Size = UDim2.new(0.94, 0, 0, 30)
+invisibleWeaponBtn.Position = UDim2.new(0.03, 0, 0, 169)
 invisibleWeaponBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 invisibleWeaponBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 invisibleWeaponBtn.Text = "Invisible Weapon & Arms: OFF"
@@ -517,10 +532,86 @@ local iwCorner = Instance.new("UICorner")
 iwCorner.CornerRadius = UDim.new(0, 6)
 iwCorner.Parent = invisibleWeaponBtn
 
+---------------------------------------------------------
+-- SKYBOX DROPDOWN & CUSTOM ID SYSTEM
+---------------------------------------------------------
+local skyboxOptions = {"Default", "Planet", "Dark", "Pink Clouds", "Lightning", "Cat Theme", "Custom ID"}
+local currentSkyboxIndex = 1
+local customSkyboxInputId = ""
+
+local skyboxAssetIds = {
+	Planet = "121440771387723",
+	Dark = "107520134613726",
+	["Pink Clouds"] = "78519513389410",
+	Lightning = "85035858752622",
+	["Cat Theme"] = "93598324414519"
+}
+
+-- Skybox Dropdown Button
+local skyboxBtn = Instance.new("TextButton")
+skyboxBtn.Name = "SkyboxBtn"
+skyboxBtn.Size = UDim2.new(0.94, 0, 0, 30)
+skyboxBtn.Position = UDim2.new(0.03, 0, 0, 206)
+skyboxBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
+skyboxBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
+skyboxBtn.Text = "Skybox: Default ▼"
+skyboxBtn.TextSize = 12
+skyboxBtn.Font = Enum.Font.GothamBold
+skyboxBtn.Parent = tab4Page
+local sbCorner = Instance.new("UICorner")
+sbCorner.CornerRadius = UDim.new(0, 6)
+sbCorner.Parent = skyboxBtn
+
+-- Skybox Dropdown List Frame
+local skyboxListFrame = Instance.new("Frame")
+skyboxListFrame.Name = "SkyboxListFrame"
+skyboxListFrame.Size = UDim2.new(0.94, 0, 0, 0)
+skyboxListFrame.Position = UDim2.new(0.03, 0, 0, 240)
+skyboxListFrame.BackgroundColor3 = Color3.fromRGB(25, 20, 32)
+skyboxListFrame.ClipsDescendants = true
+skyboxListFrame.ZIndex = 5
+skyboxListFrame.Parent = tab4Page
+local sblCorner = Instance.new("UICorner")
+sblCorner.CornerRadius = UDim.new(0, 6)
+sblCorner.Parent = skyboxListFrame
+
+local sblStroke = Instance.new("UIStroke")
+sblStroke.Color = Color3.fromRGB(80, 55, 100)
+sblStroke.Thickness = 1
+sblStroke.Parent = skyboxListFrame
+
+local skyboxListLayout = Instance.new("UIListLayout")
+skyboxListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+skyboxListLayout.Padding = UDim.new(0, 2)
+skyboxListLayout.Parent = skyboxListFrame
+
+-- Custom Skybox TextBox Input
+local customSkyInput = Instance.new("TextBox")
+customSkyInput.Name = "CustomSkyInput"
+customSkyInput.Size = UDim2.new(0.94, 0, 0, 28)
+customSkyInput.Position = UDim2.new(0.03, 0, 0, 240)
+customSkyInput.BackgroundColor3 = Color3.fromRGB(25, 20, 32)
+customSkyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+customSkyInput.PlaceholderText = "Enter Skybox ID..."
+customSkyInput.PlaceholderColor3 = Color3.fromRGB(150, 140, 170)
+customSkyInput.Text = ""
+customSkyInput.TextSize = 11
+customSkyInput.Font = Enum.Font.Gotham
+customSkyInput.Visible = false
+customSkyInput.Parent = tab4Page
+local csiCorner = Instance.new("UICorner")
+csiCorner.CornerRadius = UDim.new(0, 6)
+csiCorner.Parent = customSkyInput
+
+local csiStroke = Instance.new("UIStroke")
+csiStroke.Color = Color3.fromRGB(80, 55, 100)
+csiStroke.Thickness = 1
+csiStroke.Parent = customSkyInput
+
 local camoPaletteToggleBtn = Instance.new("TextButton")
 camoPaletteToggleBtn.Name = "CamoPaletteToggleBtn"
-camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 28)
-camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 182)
+camoPaletteToggleBtn.Size = UDim2.new(0.94, 0, 0, 30)
+camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, 243)
 camoPaletteToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 camoPaletteToggleBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 camoPaletteToggleBtn.Text = "Camo Palette: CLOSED"
@@ -534,7 +625,7 @@ cptCorner.Parent = camoPaletteToggleBtn
 local paletteFrame = Instance.new("Frame")
 paletteFrame.Name = "PaletteFrame"
 paletteFrame.Size = UDim2.new(0.94, 0, 0, 0)
-paletteFrame.Position = UDim2.new(0.03, 0, 0, 214)
+paletteFrame.Position = UDim2.new(0.03, 0, 0, 278)
 paletteFrame.BackgroundTransparency = 1
 paletteFrame.ClipsDescendants = true
 paletteFrame.Parent = tab4Page
@@ -606,12 +697,14 @@ end
 local paletteOpen = false
 camoPaletteToggleBtn.MouseButton1Click:Connect(function()
 	paletteOpen = not paletteOpen
-	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 70) or UDim2.new(0.94, 0, 0, 0)
+	local targetSize = paletteOpen and UDim2.new(0.94, 0, 0, 75) or UDim2.new(0.94, 0, 0, 0)
 	camoPaletteToggleBtn.Text = paletteOpen and "Camo Palette: OPEN" or "Camo Palette: CLOSED"
 	camoPaletteToggleBtn.BackgroundColor3 = paletteOpen and (buttonRainbowMode and Color3.fromHSV(hue, 1, 1) or activeTabBg) or Color3.fromRGB(40, 32, 52)
 	camoPaletteToggleBtn.TextColor3 = paletteOpen and activeTabTxt or Color3.fromRGB(220, 220, 230)
 	
-	tab4Page.CanvasSize = paletteOpen and UDim2.new(0, 0, 0, 300) or UDim2.new(0, 0, 0, 225)
+	local yOffset = (currentSkyboxIndex == #skyboxOptions) and 275 or 243
+	paletteFrame.Position = UDim2.new(0.03, 0, 0, yOffset + 35)
+	
 	TweenService:Create(paletteFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetSize}):Play()
 end)
 
@@ -621,7 +714,7 @@ end)
 local serverInfoLabel = Instance.new("TextLabel")
 serverInfoLabel.Name = "ServerInfoLabel"
 serverInfoLabel.Size = UDim2.new(1, -20, 0, 30)
-serverInfoLabel.Position = UDim2.new(0, 12, 0, 10)
+serverInfoLabel.Position = UDim2.new(0, 14, 0, 10)
 serverInfoLabel.BackgroundTransparency = 1
 serverInfoLabel.Text = "Server Management & Hop Utility"
 serverInfoLabel.TextColor3 = Color3.fromRGB(200, 200, 215)
@@ -633,7 +726,7 @@ serverInfoLabel.Parent = tab5Page
 local rejoinBtn = Instance.new("TextButton")
 rejoinBtn.Name = "RejoinBtn"
 rejoinBtn.Size = UDim2.new(0.94, 0, 0, 38)
-rejoinBtn.Position = UDim2.new(0.03, 0, 0, 50)
+rejoinBtn.Position = UDim2.new(0.03, 0, 0, 48)
 rejoinBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 rejoinBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 rejoinBtn.Text = "Rejoin (Current Server)"
@@ -647,7 +740,7 @@ rjCorner.Parent = rejoinBtn
 local serverHopBtn = Instance.new("TextButton")
 serverHopBtn.Name = "ServerHopBtn"
 serverHopBtn.Size = UDim2.new(0.94, 0, 0, 38)
-serverHopBtn.Position = UDim2.new(0.03, 0, 0, 98)
+serverHopBtn.Position = UDim2.new(0.03, 0, 0, 95)
 serverHopBtn.BackgroundColor3 = Color3.fromRGB(40, 32, 52)
 serverHopBtn.TextColor3 = Color3.fromRGB(220, 220, 230)
 serverHopBtn.Text = "Server Hop (New Server)"
@@ -664,7 +757,7 @@ shCorner.Parent = serverHopBtn
 local miscTitle = Instance.new("TextLabel")
 miscTitle.Name = "MiscTitle"
 miscTitle.Size = UDim2.new(1, -20, 0, 20)
-miscTitle.Position = UDim2.new(0, 12, 0, 5)
+miscTitle.Position = UDim2.new(0, 14, 0, 5)
 miscTitle.BackgroundTransparency = 1
 miscTitle.Text = "UI Customization (Border & Button Colors)"
 miscTitle.TextColor3 = Color3.fromRGB(200, 200, 215)
@@ -676,7 +769,7 @@ miscTitle.Parent = tab6Page
 local function createUIColorPicker(parent, yPos, labelText, callback)
 	local lbl = Instance.new("TextLabel")
 	lbl.Size = UDim2.new(1, -20, 0, 16)
-	lbl.Position = UDim2.new(0, 12, 0, yPos)
+	lbl.Position = UDim2.new(0, 14, 0, yPos)
 	lbl.BackgroundTransparency = 1
 	lbl.Text = labelText
 	lbl.TextColor3 = Color3.fromRGB(180, 170, 200)
@@ -696,7 +789,7 @@ local function createUIColorPicker(parent, yPos, labelText, callback)
 	}
 
 	local container = Instance.new("Frame")
-	container.Size = UDim2.new(0.94, 0, 0, 26)
+	container.Size = UDim2.new(0.94, 0, 0, 28)
 	container.Position = UDim2.new(0.03, 0, 0, yPos + 18)
 	container.BackgroundTransparency = 1
 	container.Parent = parent
@@ -758,10 +851,10 @@ createUIColorPicker(tab6Page, 90, "Active Button Accent Color:", function(col)
 	end
 end)
 
--- Config Save/Load Buttons moved inside Tab 6 (Misc)
+-- Config Save/Load Buttons
 local saveConfigBtn = Instance.new("TextButton")
 saveConfigBtn.Name = "SaveConfigBtn"
-saveConfigBtn.Size = UDim2.new(0.45, 0, 0, 28)
+saveConfigBtn.Size = UDim2.new(0.45, 0, 0, 30)
 saveConfigBtn.Position = UDim2.new(0.03, 0, 0, 155)
 saveConfigBtn.BackgroundColor3 = activeTabBg
 saveConfigBtn.TextColor3 = activeTabTxt
@@ -775,7 +868,7 @@ scCorner.Parent = saveConfigBtn
 
 local loadConfigBtn = Instance.new("TextButton")
 loadConfigBtn.Name = "LoadConfigBtn"
-loadConfigBtn.Size = UDim2.new(0.45, 0, 0, 28)
+loadConfigBtn.Size = UDim2.new(0.45, 0, 0, 30)
 loadConfigBtn.Position = UDim2.new(0.52, 0, 0, 155)
 loadConfigBtn.BackgroundColor3 = activeTabBg
 loadConfigBtn.TextColor3 = activeTabTxt
@@ -788,12 +881,12 @@ lcCorner.CornerRadius = UDim.new(0, 6)
 lcCorner.Parent = loadConfigBtn
 
 ---------------------------------------------------------
--- FOOTER (Status Label only)
+-- FOOTER (Status Label)
 ---------------------------------------------------------
 local statusLabel = Instance.new("TextLabel")
 statusLabel.Name = "StatusLabel"
-statusLabel.Size = UDim2.new(1, 0, 0, 16)
-statusLabel.Position = UDim2.new(0, 0, 0, 326)
+statusLabel.Size = UDim2.new(1, -25, 0, 18)
+statusLabel.Position = UDim2.new(0, 0, 1, -20)
 statusLabel.BackgroundTransparency = 1
 statusLabel.Text = "Loop: Auto-Active"
 statusLabel.TextColor3 = Color3.fromRGB(150, 130, 170)
@@ -892,7 +985,6 @@ local configFileName = "SpeedCrosshairConfig.json"
 local slidingSpeed, slidingJump, slidingSpin, slidingRot, slidingThick, slidingSize, slidingEspDist = false, false, false, false, false, false, false
 local draggingCrosshair = false
 
--- Caching Table for original part properties (prevents permanent glowing blocks)
 local originalPartData = {}
 
 ---------------------------------------------------------
@@ -912,53 +1004,58 @@ UserInputService.JumpRequest:Connect(function()
 	end
 end)
 
--- Custom Sky Objects for Night Mode
-local customSky = nil
-local customAtmosphere = nil
+---------------------------------------------------------
+-- SKYBOX & NIGHT MODE LOGIC (KEIN SCHWARZER HIMMEL)
+---------------------------------------------------------
+local function applySkyboxMode()
+	local selectedSkyMode = skyboxOptions[currentSkyboxIndex]
+	local activeSky = Lighting:FindFirstChild("CustomActiveSky")
+
+	if selectedSkyMode == "Default" then
+		if activeSky then activeSky:Destroy() end
+	else
+		local rawId = ""
+		if selectedSkyMode == "Custom ID" then
+			rawId = customSkyboxInputId
+		else
+			rawId = skyboxAssetIds[selectedSkyMode] or ""
+		end
+
+		local cleanId = rawId:gsub("%D", "")
+		if cleanId ~= "" then
+			local assetUrl = "rbxassetid://" .. cleanId
+			if not activeSky then
+				activeSky = Instance.new("Sky")
+				activeSky.Name = "CustomActiveSky"
+				activeSky.Parent = Lighting
+			end
+
+			activeSky.SkyboxBk = assetUrl
+			activeSky.SkyboxDn = assetUrl
+			activeSky.SkyboxFt = assetUrl
+			activeSky.SkyboxLf = assetUrl
+			activeSky.SkyboxRt = assetUrl
+			activeSky.SkyboxUp = assetUrl
+			activeSky.CelestialBodiesShown = true
+		end
+	end
+end
 
 local function applyNightMode()
 	if nightModeActive then
+		-- Reduziert nur Beleuchtung/Licht, lässt den Himmel unberührt
 		Lighting.ClockTime = 20
 		Lighting.Brightness = 4.5
 		Lighting.Ambient = Color3.fromRGB(150, 140, 180)
 		Lighting.OutdoorAmbient = Color3.fromRGB(160, 150, 190)
-		
-		if not Lighting:FindFirstChild("CustomNightSky") then
-			customSky = Instance.new("Sky")
-			customSky.Name = "CustomNightSky"
-			customSky.SkyboxBk = "rbxassetid://135280496"
-			customSky.SkyboxDn = "rbxassetid://135280496"
-			customSky.SkyboxFt = "rbxassetid://135280496"
-			customSky.SkyboxLf = "rbxassetid://135280496"
-			customSky.SkyboxRt = "rbxassetid://135280496"
-			customSky.SkyboxUp = "rbxassetid://135280496"
-			customSky.CelestialBodiesShown = true
-			customSky.MoonTextureId = "rbxassetid://644432057"
-			customSky.Parent = Lighting
-		end
-
-		if not Lighting:FindFirstChild("CustomNightAtmosphere") then
-			customAtmosphere = Instance.new("Atmosphere")
-			customAtmosphere.Name = "CustomNightAtmosphere"
-			customAtmosphere.Density = 0.035
-			customAtmosphere.Offset = 0.35
-			customAtmosphere.Color = Color3.fromRGB(150, 140, 180)
-			customAtmosphere.Decay = Color3.fromRGB(100, 90, 130)
-			customAtmosphere.Glare = 0.6
-			customAtmosphere.Haze = 0.15
-			customAtmosphere.Parent = Lighting
-		end
 	else
 		Lighting.ClockTime = 14
 		Lighting.Brightness = 2
 		Lighting.Ambient = Color3.fromRGB(128, 128, 128)
 		Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-		
-		local s = Lighting:FindFirstChild("CustomNightSky")
-		if s then s:Destroy() end
-		local a = Lighting:FindFirstChild("CustomNightAtmosphere")
-		if a then a:Destroy() end
 	end
+	
+	applySkyboxMode()
 end
 
 local function getHumanoid()
@@ -1104,8 +1201,59 @@ local function updateGUIFromValues()
 	nightModeBtn.BackgroundColor3 = nightModeActive and curActiveColor or Color3.fromRGB(40, 32, 52)
 	nightModeBtn.TextColor3 = nightModeActive and activeTabTxt or Color3.fromRGB(220, 220, 230)
 
+	skyboxBtn.Text = "Skybox: " .. skyboxOptions[currentSkyboxIndex] .. " ▼"
+	skyboxBtn.BackgroundColor3 = (currentSkyboxIndex > 1) and curActiveColor or Color3.fromRGB(40, 32, 52)
+	skyboxBtn.TextColor3 = (currentSkyboxIndex > 1) and activeTabTxt or Color3.fromRGB(220, 220, 230)
+
+	local isCustomMode = (skyboxOptions[currentSkyboxIndex] == "Custom ID")
+	customSkyInput.Visible = isCustomMode
+	
+	local nextY = isCustomMode and 275 or 243
+	camoPaletteToggleBtn.Position = UDim2.new(0.03, 0, 0, nextY)
+	paletteFrame.Position = UDim2.new(0.03, 0, 0, nextY + 35)
+
 	applyStats()
 end
+
+---------------------------------------------------------
+-- DROPDOWN MENU GENERATION
+---------------------------------------------------------
+local skyboxDropdownOpen = false
+
+for idx, optName in ipairs(skyboxOptions) do
+	local itemBtn = Instance.new("TextButton")
+	itemBtn.Name = "SkyItem_" .. optName
+	itemBtn.Size = UDim2.new(1, 0, 0, 26)
+	itemBtn.BackgroundColor3 = Color3.fromRGB(35, 28, 45)
+	itemBtn.TextColor3 = Color3.fromRGB(200, 200, 220)
+	itemBtn.Text = optName
+	itemBtn.TextSize = 11
+	itemBtn.Font = Enum.Font.GothamMedium
+	itemBtn.ZIndex = 6
+	itemBtn.Parent = skyboxListFrame
+
+	local ic = Instance.new("UICorner")
+	ic.CornerRadius = UDim.new(0, 4)
+	ic.Parent = itemBtn
+
+	itemBtn.MouseButton1Click:Connect(function()
+		currentSkyboxIndex = idx
+		skyboxDropdownOpen = false
+		skyboxListFrame.Size = UDim2.new(0.94, 0, 0, 0)
+		updateGUIFromValues()
+	end)
+end
+
+skyboxBtn.MouseButton1Click:Connect(function()
+	skyboxDropdownOpen = not skyboxDropdownOpen
+	local targetHeight = skyboxDropdownOpen and (#skyboxOptions * 28 + 4) or 0
+	TweenService:Create(skyboxListFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0.94, 0, 0, targetHeight)}):Play()
+end)
+
+customSkyInput.FocusLost:Connect(function()
+	customSkyboxInputId = customSkyInput.Text
+	updateGUIFromValues()
+end)
 
 ---------------------------------------------------------
 -- CONFIG SYSTEM
@@ -1129,6 +1277,8 @@ local function saveConfig()
 		InvisibleWeaponOn = invisibleWeaponActive,
 		NightModeOn = nightModeActive,
 		DoubleJumpOn = doubleJumpActive,
+		SkyboxIndex = currentSkyboxIndex,
+		CustomSkyID = customSkyboxInputId,
 		CamoIndex = selectedColorIndex,
 		CrossStyle = crosshairStyle,
 		PosX = customPosX,
@@ -1137,7 +1287,9 @@ local function saveConfig()
 		ButtonRainbow = buttonRainbowMode,
 		ActiveBgR = activeTabBg.R,
 		ActiveBgG = activeTabBg.G,
-		ActiveBgB = activeTabBg.B
+		ActiveBgB = activeTabBg.B,
+		FrameWidth = frame.AbsoluteSize.X,
+		FrameHeight = frame.AbsoluteSize.Y
 	}
 	if writefile then
 		pcall(function()
@@ -1177,12 +1329,19 @@ local function loadConfig()
 			invisibleWeaponActive = result.InvisibleWeaponOn or false
 			nightModeActive = result.NightModeOn or false
 			doubleJumpActive = result.DoubleJumpOn or false
+			currentSkyboxIndex = result.SkyboxIndex or 1
+			customSkyboxInputId = result.CustomSkyID or ""
+			customSkyInput.Text = customSkyboxInputId
 			selectedColorIndex = result.CamoIndex or 1
 			crosshairStyle = result.CrossStyle or "Standard"
 			
 			if result.PosX and result.PosY then
 				customPosX = result.PosX
 				customPosY = result.PosY
+			end
+
+			if result.FrameWidth and result.FrameHeight then
+				frame.Size = UDim2.new(0, math.clamp(result.FrameWidth, 300, 900), 0, math.clamp(result.FrameHeight, 250, 700))
 			end
 			
 			if result.BorderRainbow ~= nil then borderRainbowMode = result.BorderRainbow end
@@ -1630,11 +1789,41 @@ player.CharacterAdded:Connect(function()
 	updateGUIFromValues()
 end)
 
+---------------------------------------------------------
+-- DRAGGING & DYNAMIC RESIZING LOGIC
+---------------------------------------------------------
+local isResIZING = false
+local resizeStartPos = Vector2.new()
+local startFrameSize = Vector2.new()
+
+resizeGrip.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		isResIZING = true
+		resizeStartPos = Vector2.new(input.Position.X, input.Position.Y)
+		startFrameSize = Vector2.new(frame.AbsoluteSize.X, frame.AbsoluteSize.Y)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if isResIZING and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		local delta = Vector2.new(input.Position.X, input.Position.Y) - resizeStartPos
+		local newWidth = math.clamp(startFrameSize.X + delta.X, 300, 900)
+		local newHeight = math.clamp(startFrameSize.Y + delta.Y, 250, 700)
+		frame.Size = UDim2.new(0, newWidth, 0, newHeight)
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		isResIZING = false
+	end
+end)
+
 local function makeDraggable(guiObject)
 	local dragging, dragStart, startPos
 	guiObject.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			if not (slidingSpeed or slidingJump or slidingSpin or slidingRot or slidingThick or slidingSize or slidingEspDist) then
+			if not isResIZING and not (slidingSpeed or slidingJump or slidingSpin or slidingRot or slidingThick or slidingSize or slidingEspDist) then
 				dragging = true
 				dragStart = input.Position
 				startPos = guiObject.Position
